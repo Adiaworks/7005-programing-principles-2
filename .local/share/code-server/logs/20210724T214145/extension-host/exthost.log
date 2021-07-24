@@ -26,3 +26,5 @@
 [2021-07-24 22:36:51.510] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/local/code-server-3.11.0-linux-amd64/lib/vscode/extensions/markdown-language-features/dist/extension
 [2021-07-24 22:43:10.928] [exthost] [info] ExtensionService#_doActivateExtension vscode.github-authentication {"startup":false,"extensionId":{"value":"vscode.github-authentication","_lower":"vscode.github-authentication"},"activationEvent":"onAuthenticationRequest:github"}
 [2021-07-24 22:43:10.928] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/local/code-server-3.11.0-linux-amd64/lib/vscode/extensions/github-authentication/dist/extension.js
+[2021-07-24 22:53:37.650] [exthost] [info] ExtensionService#_doActivateExtension vscode.npm {"startup":false,"extensionId":{"value":"vscode.npm","_lower":"vscode.npm"},"activationEvent":"onLanguage:json"}
+[2021-07-24 22:53:37.650] [exthost] [info] ExtensionService#loadCommonJSModule file:///usr/local/code-server-3.11.0-linux-amd64/lib/vscode/extensions/npm/dist/npmMain
