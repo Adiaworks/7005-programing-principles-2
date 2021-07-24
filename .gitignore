@@ -1,5 +1,5 @@
-./.local/*
-./.cache/*
-./.config/*
+.local/
+.cache/
+.config/
 
-./.gitconfig
+.gitconfig
