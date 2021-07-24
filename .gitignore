@@ -2,4 +2,6 @@
 .cache/
 .config/
 
+html/.htaccess
+html/.htpasswd
 .gitconfig
