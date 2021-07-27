@@ -1,15 +1,18 @@
+#body {
+    min-height: 75rem;
+}
+
 #navbar {
     border-color: black;
     border-style: solid;
     padding: 10px;
+    margin-bottom: 50px;
 }
 
-#content {
-    border-color: black;
-    border-style: solid;
-    padding: 10px;
+.black-border {
+    border: 3px solid #000000;
 }
 
-#body {
-    min-height: 75rem;
+.posts-display {
+    margin-bottom: 25px;
 }
