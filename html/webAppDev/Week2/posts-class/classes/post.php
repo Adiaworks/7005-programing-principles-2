@@ -34,6 +34,7 @@ class Post{
         return $this->comments->getComment();
     }
     function addComments($user, $comment) {
+        //Adding a comment to a post
         $this->comments->addComments($user, $comment);
     }
 }

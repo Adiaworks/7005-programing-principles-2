@@ -9,6 +9,7 @@ class Comment{
     }
 
     function getComment(){
+        //Get the comment
         return $this->comments;
     }
 
