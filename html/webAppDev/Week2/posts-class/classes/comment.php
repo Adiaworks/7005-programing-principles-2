@@ -2,7 +2,7 @@
 
 namespace wad;
 class Comment{
-    protected $comments;
+    protected mixed $comments;
     
     function __construct(){
         $this->comments = [];

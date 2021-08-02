@@ -5,13 +5,13 @@ use wad\Comment;
 include 'comment.php';
 
 class Post{
-    protected $user;
-    protected $message;
-    protected $image;
-    protected $date;
-    protected $comments;
+    protected string $user;
+    protected string $message;
+    protected mixed $image;
+    protected string $date;
+    protected object $comments;
     
-    function __construct($user, $message, $image, $date){
+    function __construct($user,  $message, $image, $date){
         $this->user = $user;
         $this->message = $message;
         $this->image = $image;

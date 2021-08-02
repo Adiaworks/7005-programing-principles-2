@@ -2,7 +2,7 @@
 namespace wad;
 
 class CommentSeeder{
-    public static function seed($posts){
+    public static function seed( mixed $posts){
         //Add comments for posts
         foreach($posts as $post) {
             $post->addComments("Bob", "Great!");
