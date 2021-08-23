@@ -4,6 +4,9 @@
  * DANGEROUS: Does not sanitise user input.
  * BAD STYLE: Does not use templates.  Interleaves PHP and HTML.
  */
+
+use PhpParser\Node\Stmt\ElseIf_;
+
 include "includes/defs.php";
 
 /* Get form data. */
@@ -19,66 +22,83 @@ $pms = search($name, $year, $state);
 <!DOCTYPE html>
 <!-- Results page of associative array search example. -->
 <html>
+
 <head>
-    <title>Associative array search results page</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="styles/wp.css">
+  <title>Associative array search results page</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="styles/wp.css">
 </head>
 
 <body>
-<h2>Australian Prime Ministers</h2>
-<h3>Results</h3>
+  <h2>Australian Prime Ministers</h2>
+  <h3>Results</h3>
 
-<?php 
-if (count($pms) == 0) {
-?>
-<p>At least one field must contain value.</p>
-<form method="get" action="results.php">
-  <table>
-    <tr><td>Name: </td><td><input type="text" name="name"></td></tr>
-    <tr><td>Year: </td><td><input type="text" name="year"></td></tr>
-    <tr><td>State: </td><td><input type="text" name="state"></td></tr>
-    <tr><td colspan=2><input type="submit" value="Search">
-                      <input type="reset" value="Reset"></td></tr>
-  <table>
-  </form>
-<?php
-} else {
-?>
-<h4> <?php echo $name ?> </h4>
-<h4> <?php echo $year ?> </h4>
-<h4> <?php echo $state ?> </h4>
-<table class="bordered">
-<thead>
-<tr><th>No.</th><th>Name</th><th>From</th><th>To</th><th>Duration</th><th>Party</th><th>State</th></tr>
-</thead>
-<tbody>
-<?php
-foreach($pms as $pm) {
-  if (!var_dump($pm['from'])==int($pm['from']) ||
-      !var_dump($pm['to'])==int($pm['to'])) {
-      echo "Year must be a number.";
-      }
-  else
-  print 
-      "<tr><td>{$pm['index']}</td><td>{$pm['name']}</td><td>{$pm['from']}</td><td>{$pm['to']}</td><td>{$pm['duration']}</td><td>{$pm['party']}</td><td>{$pm['state']}</td></tr>\n";
-}
-?>
-</tbody>
-</table>
-<?php
-}
-?>
+  <?php
+  if (count($pms[0]) == 0) {
+  ?>
+    <p><?php echo $pms[1] ?></p>
+    <form method="get" action="results.php">
+      <table>
+        <tr>
+          <td>Name: </td>
+          <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+          <td>Year: </td>
+          <td><input type="text" name="year"></td>
+        </tr>
+        <tr>
+          <td>State: </td>
+          <td><input type="text" name="state"></td>
+        </tr>
+        <tr>
+          <td colspan=2><input type="submit" value="Search">
+            <input type="reset" value="Reset">
+          </td>
+        </tr>
+        <table>
+    </form>
 
-<p><a href="index.html">New search</a></p>
+  <?php
+  } else {
+  ?>
+    <h4> <?php echo $name ?> </h4>
+    <h4> <?php echo $year ?> </h4>
+    <h4> <?php echo $state ?> </h4>
+    <table class="bordered">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Duration</th>
+          <th>Party</th>
+          <th>State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        foreach ($pms[0] as $pm) {
+          print
+            "<tr><td>{$pm['index']}</td><td>{$pm['name']}</td><td>{$pm['from']}</td><td>{$pm['to']}</td><td>{$pm['duration']}</td><td>{$pm['party']}</td><td>{$pm['state']}</td></tr>\n";
+        }
+        ?>
+      </tbody>
+    </table>
+  <?php
+  }
+  ?>
+  <p><a href="index.html">New search</a></p>
 
-<hr>
-<p>
-  Sources:
-  <a href="show.php?file=results.php">results.php</a>
-  <a href="show.php?file=includes/defs.php">includes/defs.php</a>
-  <a href="show.php?file=includes/pms.php">includes/pms.php</a>
-</p>
+  <hr>
+  <p>
+    Sources:
+    <a href="show.php?file=results.php">results.php</a>
+    <a href="show.php?file=includes/defs.php">includes/defs.php</a>
+    <a href="show.php?file=includes/pms.php">includes/pms.php</a>
+  </p>
 
 </body>
+
 </html>

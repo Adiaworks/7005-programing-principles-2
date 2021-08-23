@@ -5,11 +5,13 @@
 include "pms.php";
 
 /* Search sample data for $name or $year or $state from form. */
-function search($name, $year, $state) {
-    global $pms; 
+function search($name, $year, $state)
+{
+	global $pms;
+	global $error;
 
-    // Filter $pms by $name
-    if (!empty($name)) {
+	// Filter $pms by $name
+	if (!empty($name)) {
 		$results = array();
 		foreach ($pms as $pm) {
 			if (stripos($pm['name'], $name) !== FALSE) {
@@ -17,22 +19,29 @@ function search($name, $year, $state) {
 			}
 		}
 		$pms = $results;
-    }
+	}
 
-    // Filter $pms by $year
-    if (!empty($year)) {
-		$results = array();
-		foreach ($pms as $pm) {
-			if (strpos($pm['from'], $year) !== FALSE || 
-				strpos($pm['to'], $year) !== FALSE) {
-				$results[] = $pm;
+	// Filter $pms by $year
+	if (!empty($year)) {
+		if (is_int($year)) {
+			$results = array();
+			foreach ($pms as $pm) {
+				if (
+					strpos($pm['from'], $year) !== FALSE ||
+					strpos($pm['to'], $year) !== FALSE
+				) {
+					$results[] = $pm;
+				}
 			}
+			$pms = $results;
+		} else {
+			$error = "Year must be a number.";
+			$pms = [];
 		}
-		$pms = $results;
-    }
+	}
 
-    // Filter $pms by $state
-    if (!empty($state)) {
+	// Filter $pms by $state
+	if (!empty($state)) {
 		$results = array();
 		foreach ($pms as $pm) {
 			if (stripos($pm['state'], $state) !== FALSE) {
@@ -42,6 +51,10 @@ function search($name, $year, $state) {
 		$pms = $results;
 	}
 
-    return $pms;
+	if (empty($name) && empty($year) && empty($state)) {
+		$error = "At least one field must contain value.";
+		$pms = [];
+	}
+
+	return [$pms, $error];
 }
-?>
