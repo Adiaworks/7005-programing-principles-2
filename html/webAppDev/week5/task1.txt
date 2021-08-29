@@ -1,0 +1,21 @@
+a.Entities: Blog, Articles
+Blogs(id, title, creator)
+Articles(id, headline, text, author, blogs_id)
+
+b.Entities: Newspapaer, Issue, Article, Photo
+Issue(id, date)
+Article(id, headline, text, author, issue_id)
+Photo(id, caption, photographer, image)
+Article_Photo(article_id, photo_id)
+
+c.Entities: Journal, Article, Author,Reference
+Journal(id, name, date)
+Articles(id, title, date, body, journal_id)
+Authors(id, name, affiliation)
+References(id)
+Articles_References(articles_id, references_id)
+Articles_Authors(articles_id, authors_id)
+
+Articles:References=m:m
+Articles:authors=m:m
+Journal:Articles=1:m

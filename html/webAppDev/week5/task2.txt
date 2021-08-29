@@ -1,0 +1,16 @@
+a.
+SELECT titles
+FROM Blogs
+WHERE titles LIKE '%Japan%';
+
+b.
+SELECT titles
+FROM Blogs, Articles
+WHERE headline LIKE '%Japan%'
+AND articles.blogs_id = blogs.id;
+
+c.
+SELECT titles
+FROM Blogs, Articles
+WHERE blogs.creator = articles.author
+AND articles.blogs_id = blogs.id;
