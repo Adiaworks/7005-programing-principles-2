@@ -1,0 +1,20 @@
+a. Which stock has Sally ordered?
+
+SELECT Stock.name
+FROM Stock, Orders, Customers
+WHERE Customers.name = 'Sally' AND Customers.id = Orders.CustId AND Orders.ItemId = Stock.id;
+
+b.What are the names of customers who live in Nathan?
+
+SELECT name
+FROM Customers
+WHERE address LIKE '%Nathan%';
+
+c. What are the names of customers who have bought Marcel’s Morsels? Note: there is
+a small catch here where you need to deal with ‘ in the string.
+
+SELECT Customers.name
+FROM Customers, Orders, Stock
+WHERE Stock.name LIKE "%Marcel's Morsels%" 
+AND Orders.ItemId = Stock.Id 
+AND Orders.CustID = Customers.id;
