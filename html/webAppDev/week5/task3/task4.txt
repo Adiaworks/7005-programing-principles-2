@@ -4,14 +4,14 @@ SELECT Stock.name
 FROM Stock, Orders, Customers
 WHERE Customers.name = 'Sally' AND Customers.id = Orders.CustId AND Orders.ItemId = Stock.id;
 
-b.What are the names of customers who live in Nathan?
+b.What are the names of customers who live in Nathan? (Bob & John)
 
 SELECT name
 FROM Customers
 WHERE address LIKE '%Nathan%';
 
 c. What are the names of customers who have bought Marcel’s Morsels? Note: there is
-a small catch here where you need to deal with ‘ in the string.
+a small catch here where you need to deal with ‘ in the string.  (Fred's Fries 2 & 3 Craig's Cabbages)
 
 SELECT Customers.name
 FROM Customers, Orders, Stock
