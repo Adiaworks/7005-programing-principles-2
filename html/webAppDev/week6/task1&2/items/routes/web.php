@@ -33,8 +33,10 @@ Route::get('item_delete/{id}', function($id){
     return view('items.item_delete')->with('item', $item);
 });
 
-Route::get('item_update/{id}', function($id){
-    $item = get_item($id);
+Route::post('item_update_action', function($id){
+    $summary = request('summary');
+    $details = request('details');
+    $item = update_item($id, $summary, $details);
     return view('items.item_update')->with('item', $item);
 });
 
@@ -57,6 +59,11 @@ Route::post('add_item_action', function(){
         die("Error while adding item.");
     }
 });
+
+function update_item($id, $summary, $details) {
+    $sql = "update item set summary = ?, details = ? where id = ?";
+    DB::update($sql, array($summary, $details, $id));
+    }
 
 function add_item($summary, $details){
    $sql = "insert into item (summary, details) values (?, ?)";
