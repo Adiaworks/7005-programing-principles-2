@@ -5,8 +5,5 @@
 @endsection
 
 @section('content') 
-  @foreach($items as $item)
-    <p>{{$item->summary}}:{{$item->details}}</p>
-  @endforeach
- 
+    <h1>Update Item</h1>
 @endsection
