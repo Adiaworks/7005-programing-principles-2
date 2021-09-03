@@ -18,30 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
     $sql = "select * from item";
     $items = DB::select($sql);
-    //$items = array();
-    return view('items.item_list')->with('items', $items); /*dot or slash can be used*/
+    //$items = array(), including all the data in the table/database;
+    return view('items.item_list')->with('items', $items); /*dot or slash can be used to go to the directory of items */
     //dd($item);
 });
 
 Route::get('item_detail/{id}', function($id){
     $item = get_item($id);
     return view('items.item_detail')->with('item', $item);
-});
-
-Route::get('item_delete/{id}', function($id){
-    $item = get_item($id);
-    return view('items.item_delete')->with('item', $item);
-});
-
-Route::post('item_update_action', function($id){
-    $summary = request('summary');
-    $details = request('details');
-    $item = update_item($id, $summary, $details);
-    return view('items.item_update')->with('item', $item);
-});
-
-Route::get('add_item', function(){
-    return view("items.add_item");
 });
 
 Route::get('add_item/{id}', function($id){
@@ -58,13 +42,35 @@ Route::post('add_item_action', function(){
     } else {
         die("Error while adding item.");
     }
+});//this route is called by the add_item.blade.php and then add the new item to the database 
+//and display the detail page for the new item.
+
+Route::get('item_delete/{id}', function($id){
+    delete_item($id);
+    $sql = "select * from item";
+    $items = DB::select($sql);
+    return view('items.item_list')->with('items', $items);
+});
+
+Route::get('item_update/{id}', function($id){
+    $item = get_item($id);
+    return view('items.item_update')->with('item', $item);
+});
+
+Route::post('update_item_action/{id}', function($id){
+    $summary = request('summary');
+    $details = request('details');
+    update_item($id, $summary, $details);
+    $item = get_item($id);
+    // dd($details);
+    return view('items.item_detail')->with('item', $item);
 });
 
 function update_item($id, $summary, $details) {
     $sql = "update item set summary = ?, details = ? where id = ?";
     DB::update($sql, array($summary, $details, $id));
-    }
-
+}
+    
 function add_item($summary, $details){
    $sql = "insert into item (summary, details) values (?, ?)";
    DB::insert($sql, array($summary, $details));
@@ -81,3 +87,8 @@ function get_item($id){
     $item = $items[0];
     return $item;
 }
+
+function delete_item($id) {
+    $sql = "delete from item where id = ?";
+    DB::delete($sql, array($id));
+    } 

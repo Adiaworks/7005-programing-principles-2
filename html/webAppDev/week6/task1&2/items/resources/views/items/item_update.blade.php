@@ -5,16 +5,16 @@
 @endsection
 
 @section('content') 
-<form method="post" action=" {{url("update_item_action")}}">
+<form method="post" action="{{url("update_item_action/$item->id")}}">
 {{csrf_field()}}
-<input type="hidden" name="id" value="{{ $item->id }}">
+<input type="hidden" name="id" value="{{$item->id}}">
 <p>
   <label>Summary: </label>
-  <input type="text" name="summary“ value="{{$item->summary }}">
+  <textarea name="summary">{{$item->summary}}</textarea>
 </p>
 <p>
   <label>Details:</label>
-  <textarea name="details">{{ $item->details }}</textarea>
+  <textarea name="details">{{$item->details}}</textarea>
 </p>
 <input type="submit" value="Update item">
 </form>

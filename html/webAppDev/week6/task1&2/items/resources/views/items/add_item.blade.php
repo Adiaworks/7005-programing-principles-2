@@ -11,7 +11,7 @@
     {{csrf_field()}}
     <p>
       <label>Summary</label>
-      <input type="text" name="summary">
+      <input type="text" name="summary" value="{{}}">
     </p>
     <p>
       <label>Details</label>
