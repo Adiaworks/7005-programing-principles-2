@@ -1,0 +1,23 @@
+#navbar {
+    border-color: black;
+    border-style: solid;
+    padding: 10px;
+    margin-bottom: 50px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: blanchedalmond;
+}
+
+#navbar a {
+    color: brown;
+    padding: 16px 18px;
+    font-size: 20px;
+}
+
+
+#content {
+    text-align: center;
+}
+
+#content ul {
+    list-style-type: none;
+}
