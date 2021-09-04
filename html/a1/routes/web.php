@@ -45,7 +45,38 @@ Route::get('user_delete/{id}', function($id){
     return view('items.user_delete')->with('users', $users);
 });
 
+Route::get('user_update/{id}', function($id){
+    $user = get_user($id);
+    return view('items.user_update')->with('user', $user);
+});
+
+Route::post('update_user_action/{id}', function($id){
+    $name = request('name');
+    $age = request('age');
+    $license_number = request('license_number ');
+    $license_type = request('license_type');
+    update_user($id, $name, $age, $license_number, $license_type);
+    $user = get_user($id);
+    return view('items.user_detail')->with('user', $user);
+});
+
+function get_user($id){
+    $sql = "select * from user where id=?";
+    $users = DB::select($sql, array($id));
+    if (count($users)!=1){
+        die("Something has gone wrong, invalid query or result:$sql");
+    }
+    $user = $users[0];
+    return $user;
+}
+
+function update_user($id, $name, $age, $license_number, $license_type) {
+    $sql = "update user set name = ?, age = ?, license_number = ?, license_type = ? where id = ?";
+    DB::update($sql, array($name, $age, $license_number, $license_type, $id));
+}
+
 function delete_user($id) {
+    //delete the user information by $id
     $sql = "delete from user where id = ?";
     DB::delete($sql, array($id));
     } 
@@ -53,11 +84,11 @@ function delete_user($id) {
 function get_vehicle($id){
     //get the vehicle information by $id
     $sql = "select * from vehicle where id=?";
-    $vehicle = DB::select($sql, array($id));
-    if (count($vehicle)!=1){
+    $vehicles = DB::select($sql, array($id));
+    if (count($vehicles)!=1){
         die("Something has gone wrong, invalid query or result:$sql");
     }
-    $user = $vehicle[0];
-    return $user;
+    $vehicle = $vehicles[0];
+    return $vehicle;
 }
 

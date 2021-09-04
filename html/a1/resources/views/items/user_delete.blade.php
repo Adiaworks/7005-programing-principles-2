@@ -1,13 +1,9 @@
 @extends('layouts.master')
 
 @section('title')
-  Delete Item
+  Delete user
 @endsection
 
 @section('content') 
-  <h1>Delete Item</h1>
-    
-    
-
- 
+  <h1>User deleted</h1>
 @endsection
