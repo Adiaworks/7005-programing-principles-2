@@ -13,8 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
 });
+*/
 
-//Route::get('')
+Route::get('test', function(){
+    $sql = "select * from vehicle";
+    $vehicles = DB::select($sql);
+    //$items = array(), including all the data in the table/database;
+    return view('vehicle_list'); /*dot or slash can be used to go to the directory of items */
+    //dd($item);
+});
