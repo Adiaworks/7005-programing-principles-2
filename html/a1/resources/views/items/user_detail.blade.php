@@ -3,12 +3,28 @@
 @section('content')
 <h1>Users</h1>
   @if ($users)
-    <ul>
+  <table style="width:100%">
+      <tr>
+        <th>User ID</th>
+        <th>User name</th>
+        <th>User age</th>
+        <th>License number</th>
+        <th>License type</th>
+        <th>Delete</th>
+        <th>Update</th>
+      </tr>
     @foreach($users as $user)
-      <li> {{$user->id}} {{$user->name}} {{$user->age}} {{$user->license_number}} {{$user->license_type}} 
-      </a>&nbsp;  <a href="{{url("user_delete/$user->id")}}">Delete</a>&nbsp;  <a href="{{url("user_update/$user->id")}}">Update</a><br></li>
-    @endforeach
-    </ul>
+      <tr>
+        <td>{{$user->id}}</td>
+        <td>{{$user->name}}</td>
+        <td>{{$user->age}}</td>
+        <td>{{$user->license_number}}</td>
+        <td>{{$user->license_type}}</td>   
+        <td><a href="{{url("user_delete/$user->id")}}">Delete</a></td>
+        <td><a href="{{url("user_update/$user->id")}}">Update</a></td>
+      </tr>
+    @endforeach   
+  </table>
   @else
     No item found
   @endif

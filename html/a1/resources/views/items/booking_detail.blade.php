@@ -12,5 +12,6 @@
 <p>Returning time: {{$booking->returning_time}}</p>
 <a href="{{url("booking_frequency")}}">List vehicles by booking numbers</a><br><br>
 <a href="{{url("booking_time")}}">List vehicles by the amount of booking time</a><br><br>
+<a href="{{url("booking_list")}}">List all the bookings</a><br><br>
 <a href="{{url("list_vehicles")}}">Home</a>
 @endsection

@@ -11,10 +11,12 @@
 <body>
   <div class="container">
     <div class="row" id="navbar">
-      <a class="col-sm-3" href="{{url("list_vehicles")}}">Home</a>
-      <a class="col-sm-3" href="{{url("list_users")}}">Clients</a>
-      <a class="col-sm-3" href="{{url("book_a_vehicle")}}">Book</a>
-      <a class="col-sm-3" href="{{url("documentation")}}">Documentation</a>
+      <h1 class="col-sm-2">FunDrive</h1>
+      <a class="col-sm-2" href="{{url("list_vehicles")}}">Home</a>
+      <a class="col-sm-2" href="{{url("list_users")}}">Clients</a>
+      <a class="col-sm-2" href="{{url("book_a_vehicle")}}">Book</a>
+      <a class="col-sm-2" href="{{url("return_a_vehicle")}}">Return</a>
+      <a class="col-sm-2" href="{{url("documentation")}}">Documentation</a>
     </div>
     <div class="row" id="content">
       @yield('content')

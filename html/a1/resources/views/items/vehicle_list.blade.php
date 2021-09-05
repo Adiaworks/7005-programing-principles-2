@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<header>Vehicles</header>
+<h1>Vehicles</h1>
   @if ($vehicles)
     <ul>
     @foreach($vehicles as $vehicle)
