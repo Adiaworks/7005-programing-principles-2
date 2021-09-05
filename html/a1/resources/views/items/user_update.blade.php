@@ -2,7 +2,7 @@
 
 @section('content') 
 <h1>Update a user</h1>
-<form method="post" action="{{url('update_user_action/$user->id')}}">
+<form method="post" action="{{url("update_user_action/$user->id")}}">
 {{csrf_field()}}
 <input type="hidden" name="id" value="{{$user->id}}">
 <p>

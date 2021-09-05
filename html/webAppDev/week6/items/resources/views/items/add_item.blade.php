@@ -4,9 +4,8 @@
   Add Item
 @endsection
 
-
 @section('content')
-  <h1>Add Item</h1>
+  <h1>Create a user</h1>
   <form method="post" action="{{url("add_item_action")}}">
     {{csrf_field()}}
     <p>

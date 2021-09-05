@@ -32,6 +32,29 @@ Route::get('vehicle_detail/{id}', function($id){
     return view('items.vehicle_detail')->with('vehicle', $vehicle);
 });
 
+Route::get('vehicle_delete/{id}', function($id){
+    delete_vehicle($id);
+    $sql = "select * from vehicle";
+    $vehicles = DB::select($sql);
+    return view('items.vehicle_delete')->with('vehicles', $vehicles);
+});
+
+Route::get('vehicle_update/{id}', function($id){
+    $vehicle = get_vehicle($id);
+    return view('items.vehicle_update')->with('vehicle', $vehicle);
+});
+
+Route::post('update_vehicle_action/{id}', function($id){
+    $rego = request('rego');
+    $model = request('model');
+    $year = request('year');
+    $odometer = request('odometer');
+    update_vehicle($id, $rego, $model, $year, $odometer);
+    //$sql = "select * from vehicle";
+    $vehicle = get_vehicle($id);
+    return view('items.vehicle_detail')->with('vehicle', $vehicle);
+});
+
 Route::get('list_users', function(){
     $sql = "select * from user";
     $users = DB::select($sql);
@@ -53,12 +76,41 @@ Route::get('user_update/{id}', function($id){
 Route::post('update_user_action/{id}', function($id){
     $name = request('name');
     $age = request('age');
-    $license_number = request('license_number ');
+    $license_number = request('license_number');
     $license_type = request('license_type');
     update_user($id, $name, $age, $license_number, $license_type);
-    $user = get_user($id);
-    return view('items.user_detail')->with('user', $user);
+    $sql = "select * from user";
+    $users = DB::select($sql);
+    return view('items.user_detail')->with('users', $users);
 });
+
+Route::get('create_a_user/{id}', function($id){
+    $user = get_user($id);
+    return view('items.create_a_user')->with('user', $user);
+});//this route links to the add_item.blade.php file to display the add form.
+
+Route::post('create_user_action', function(){
+    $name= request('name');
+    $age = request('age');
+    $license_number = request('license_number');
+    $license_type = request('license_type');
+    $id = add_user($name, $age, $license_number, $license_type);
+    if ($id){
+        $sql = "select * from user";
+        $users = DB::select($sql);
+        return view('items.user_detail')->with('users', $users);
+        //return redirect(url("user_detail/$id"));
+    } else {
+        die("Error while adding item.");
+    }
+});
+
+function add_user($name, $age, $license_number, $license_type){
+    $sql = "insert into user (name, age, license_number, license_type) values (?, ?, ?, ?)";
+    DB::insert($sql, array($name, $age, $license_number, $license_type));
+    $id = DB::getPdo()->lastinsertId();
+    return ($id);
+ }
 
 function get_user($id){
     $sql = "select * from user where id=?";
@@ -92,3 +144,13 @@ function get_vehicle($id){
     return $vehicle;
 }
 
+function delete_vehicle($id) {
+    //delete the user information by $id
+    $sql = "delete from vehicle where id = ?";
+    DB::delete($sql, array($id));
+    } 
+
+function update_vehicle($id, $rego, $model, $year, $odometer) {
+    $sql = "update vehicle set rego = ?, model = ?, year = ?, odometer = ? where id = ?";
+    DB::update($sql, array($rego, $model, $year, $odometer, $id));
+}
