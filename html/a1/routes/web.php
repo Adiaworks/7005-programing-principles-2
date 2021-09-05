@@ -231,12 +231,13 @@ Route::get('booking_information/{id}', function($id){
       }
 });
 
-Route::get('booking_time_list/{id}', function($id){
-    //this route links to the booking information of this vehicle
-    $sql = "select * from booking where vehicle_id = ?";
+Route::get('booking_time_list/', function(){
+    /*this route links to the a page which shows the total amount of booking time 
+    of each vehicle in a descending order*/
+    $sql = "select *, datediff(MINUTE, StartTime , EndTime) from booking where vehicle_id = ?";
     $bookings = DB::select($sql, array($id));
     if ($bookings){    
-        return view('items.booking_information')->with('bookings', $bookings);
+        return view('items.booking_time_list')->with('bookings', $bookings);
       } 
       else {
         die("There's no booking at present.");
@@ -265,7 +266,6 @@ function add_booking($user_id, $user_name, $user_license_number, $vehicle_id, $s
     $id = DB::getPdo()->lastinsertId();
     return ($id);
  }
-
 
 
 function add_user($name, $age, $license_number, $license_type){
