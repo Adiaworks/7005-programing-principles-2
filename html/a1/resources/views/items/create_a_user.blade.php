@@ -17,7 +17,7 @@
       <input type="text" name="license_number" >
     </p>
     <p>
-      <label>license_type</label>
+      <label>License type</label>
       <textarea type="text" name="license_type"></textarea>
     </p>
     <input type="submit" value="Create">

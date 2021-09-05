@@ -125,6 +125,56 @@ Route::post('create_user_action', function(){
     }
 });
 
+Route::get('book_a_vehicle', function(){
+    //$booking = get_a_booking($id);
+    $sql = "select * from user";
+    $users = DB::select($sql);
+    $sql = "select * from vehicle";
+    $vehicles = DB::select($sql);
+    return view('items.book_a_vehicle')->with('users', $users)->with('vehicles', $vehicles);
+});//this route call the book_a_vehicle file to display the booking form.
+
+Route::post('booking_action', function(){
+    $user_id = request('user_id');
+    $user_name= request('user_name');
+    $user_license_number = request('license_number');
+    $vehicle_rego = request('vehicle_rego');
+    $sql_1 = "select id from vehicle where rego= '$vehicle_rego'";
+    $vehicles = DB::select($sql_1); 
+    $vehicle_id = $vehicles[0]->id; 
+    $starting_date = request('starting_date');
+    $starting_time = request('starting_time');
+    $returning_date = request('returning_date');
+    $returning_time = request('returning_time');
+    $id = add_booking($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, $starting_time, $returning_date, $returning_time);
+    if ($id){
+        $sql = "select * from booking where id='$id'";
+        $booking = DB::select($sql);
+        return view('items.booking_detail')->with('booking', $booking[0]); 
+    } 
+    else {
+        die("Error while adding a booking.");
+    }
+});
+
+function get_a_booking($id){
+    $sql = "select * from user where id=?";
+    $users = DB::select($sql, array($id));
+    if (count($users)!=1){
+        die("Something has gone wrong, invalid query or result:$sql");
+    }
+    $user = $users[0];
+    return $user;
+}
+
+
+function add_booking($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, $starting_time, $returning_date, $returning_time){
+    $sql = "insert into booking (user_id, user_name, user_license_number, vehicle_id, starting_date, starting_time, returning_date, returning_time) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    DB::insert($sql, array($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, $starting_time, $returning_date, $returning_time));
+    $id = DB::getPdo()->lastinsertId();
+    return ($id);
+ }
+
 function add_user($name, $age, $license_number, $license_type){
     $sql = "insert into user (name, age, license_number, license_type) values (?, ?, ?, ?)";
     DB::insert($sql, array($name, $age, $license_number, $license_type));
