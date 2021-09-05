@@ -219,6 +219,30 @@ Route::get('booking_frequency', function(){
     }
 });
 
+Route::get('booking_information/{id}', function($id){
+    //this route links to the booking information of this vehicle
+    $sql = "select * from booking where vehicle_id = ?";
+    $bookings = DB::select($sql, array($id));
+    if ($bookings){    
+        return view('items.booking_information')->with('bookings', $bookings);
+      } 
+      else {
+        die("There's no booking at present.");
+      }
+});
+
+Route::get('booking_time_list/{id}', function($id){
+    //this route links to the booking information of this vehicle
+    $sql = "select * from booking where vehicle_id = ?";
+    $bookings = DB::select($sql, array($id));
+    if ($bookings){    
+        return view('items.booking_information')->with('bookings', $bookings);
+      } 
+      else {
+        die("There's no booking at present.");
+      }
+});
+
 /*Functions*/
 
 /*
