@@ -50,9 +50,29 @@ Route::post('update_vehicle_action/{id}', function($id){
     $year = request('year');
     $odometer = request('odometer');
     update_vehicle($id, $rego, $model, $year, $odometer);
-    //$sql = "select * from vehicle";
     $vehicle = get_vehicle($id);
     return view('items.vehicle_detail')->with('vehicle', $vehicle);
+});
+
+Route::get('create_a_vehicle/{id}', function($id){
+    $vehicle = get_vehicle($id);
+    return view('items.create_a_vehicle')->with('vehicle', $vehicle);
+});//this route links to the add_item.blade.php file to display the add form.
+
+Route::post('create_vehicle_action', function(){
+    $rego = request('rego');
+    $model = request('model');
+    $year = request('year');
+    $odometer = request('odometer');
+    $id = add_vehicle($rego, $model, $year, $odometer);
+    if ($id){
+        $sql = "select * from vehicle";
+        $vehicles = DB::select($sql);
+        return view('items.vehicle_list')->with('vehicles', $vehicles);
+        //return redirect(url("vehicle_detail/$id"));
+    } else {
+        die("Error while adding a vehicle.");
+    }
 });
 
 Route::get('list_users', function(){
@@ -101,7 +121,7 @@ Route::post('create_user_action', function(){
         return view('items.user_detail')->with('users', $users);
         //return redirect(url("user_detail/$id"));
     } else {
-        die("Error while adding item.");
+        die("Error while adding a user.");
     }
 });
 
@@ -154,3 +174,10 @@ function update_vehicle($id, $rego, $model, $year, $odometer) {
     $sql = "update vehicle set rego = ?, model = ?, year = ?, odometer = ? where id = ?";
     DB::update($sql, array($rego, $model, $year, $odometer, $id));
 }
+
+function add_vehicle($rego, $model, $year, $odometer){
+    $sql = "insert into vehicle (rego, model, year, odometer) values (?, ?, ?, ?)";
+    DB::insert($sql, array($rego, $model, $year, $odometer));
+    $id = DB::getPdo()->lastinsertId();
+    return ($id);
+ }
