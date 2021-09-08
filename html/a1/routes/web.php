@@ -232,17 +232,13 @@ Route::get('booking_information/{id}', function($id){
 });
 
 Route::get('booking_time_list', function(){
-   //this route links to a page which shows the total amount of booking time 
-   //of each vehicle in a descending order
-
-    //$diff = ;
-    $sql_1 = "select *, DATEDIFF(hour, returning_date, starting_date)*24 as datefiff, DATEDIFF(hour, returning_time, starting_time), DATEDIFF() as TimeDiff from booking group by vehicle_id";
+   //this route links to a page which lists the total amount of booking time of every vehicle
+    $sql_1 = "select vehicle_id, cast(sum(JULIANDAY(DATETIME(DATE(returning_date) || ' ' || TIME(returning_time))) - 
+            JULIANDAY(DATETIME(DATE(starting_date) || ' ' || TIME(starting_time)))) as REAL) as booking_sum from booking 
+            group by vehicle_id order by booking_sum DESC";
+    //this sql query grouped by the vehicle id and calculated the total amount of booking time of each group and ordered in DESC 
     $bookings = DB::select($sql_1);
-    dd($sql_1);
-});//working on it
-/*
-$sql_2 = "select *, (strtotime(returning_date)-strtotime(starting_date))/60/60/24*24+(strtotime(returning_time)-strtotime(starting_time))/60) as difference from booking group by vehicle_id"; 
-    $bookings = DB::select($sql);
+    //dd($bookings);
     if ($bookings){    
         return view('items.booking_time_list')->with('bookings', $bookings);
       } 
@@ -251,7 +247,7 @@ $sql_2 = "select *, (strtotime(returning_date)-strtotime(starting_date))/60/60/2
       }
 });
 
-
+/*
 function booking_time_calculation(){
 //$sql = "select *,  from booking group by vehicle_id order by ";
 $bookings = DB::select($sql);

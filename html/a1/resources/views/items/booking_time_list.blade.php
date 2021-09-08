@@ -6,12 +6,12 @@
   <table style="width:160%">
       <tr>
         <th>Vehicle id</th>
-        <th>Booking time</th>
+        <th>Total booking time(days)</th>
       </tr>
     @foreach($bookings as $booking)
       <tr>
         <td>{{$booking->vehicle_id}}</td>
-        <td>{{$booking->difference}}</td>
+        <td>{{$booking->booking_sum}}</td>
       </tr>
     @endforeach
   </table>
