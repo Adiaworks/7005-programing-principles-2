@@ -233,8 +233,8 @@ Route::get('booking_information/{id}', function($id){
 
 Route::get('booking_time_list', function(){
    //this route links to a page which lists the total amount of booking time of every vehicle
-    $sql_1 = "select vehicle_id, cast(sum(JULIANDAY(DATETIME(DATE(returning_date) || ' ' || TIME(returning_time))) - 
-            JULIANDAY(DATETIME(DATE(starting_date) || ' ' || TIME(starting_time)))) as REAL) as booking_sum from booking 
+    $sql_1 = "select vehicle_id, sum(JULIANDAY(DATETIME(DATE(returning_date) || ' ' || TIME(returning_time))) - 
+            JULIANDAY(DATETIME(DATE(starting_date) || ' ' || TIME(starting_time)))) as booking_sum from booking 
             group by vehicle_id order by booking_sum DESC";
     //this sql query grouped by the vehicle id and calculated the total amount of booking time of each group and ordered in DESC 
     $bookings = DB::select($sql_1);

@@ -11,7 +11,7 @@
     @foreach($bookings as $booking)
       <tr>
         <td>{{$booking->vehicle_id}}</td>
-        <td>{{$booking->booking_sum}}</td>
+        <td>{{round($booking->booking_sum, 2)}}</td>
       </tr>
     @endforeach
   </table>
