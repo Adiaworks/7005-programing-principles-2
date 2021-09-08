@@ -239,7 +239,7 @@ Route::get('booking_time_list', function(){
     $sql_1 = "select *, DATEDIFF(hour, returning_date, starting_date)*24 as datefiff, DATEDIFF(hour, returning_time, starting_time), DATEDIFF() as TimeDiff from booking group by vehicle_id";
     $bookings = DB::select($sql_1);
     dd($sql_1);
-});
+});//working on it
 /*
 $sql_2 = "select *, (strtotime(returning_date)-strtotime(starting_date))/60/60/24*24+(strtotime(returning_time)-strtotime(starting_time))/60) as difference from booking group by vehicle_id"; 
     $bookings = DB::select($sql);
