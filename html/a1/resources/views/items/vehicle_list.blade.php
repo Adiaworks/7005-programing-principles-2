@@ -1,15 +1,17 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Vehicles</h1>
+  <h1>Vehicles</h1>
+
+  <ul class="list-group">
   @if ($vehicles)
-    <ul>
     @foreach($vehicles as $vehicle)
-      <li><a href="{{url("vehicle_detail/$vehicle->id")}}">{{$vehicle->rego}}</a></li>
+      <li class="list-group-item list-group-item-action"><a href="{{url("vehicle_detail/$vehicle->id")}}">{{$vehicle->rego}}</a></li>
     @endforeach
-    </ul>
   @else
-    No item found
+    <li class="list-group-item">No item found</li>
   @endif
-<a href="{{url("create_a_vehicle/$vehicle->id")}}">Create a vehicle</a><br><br>
+  </ul>
+
+  <a type="button" class="btn btn-primary" href="{{url("create_a_vehicle/$vehicle->id")}}">Create a vehicle</a>
 @endsection

@@ -7,19 +7,19 @@
 <input type="hidden" name="id" value="{{$user->id}}">
 <p>
   <label>Name: </label>
-  <textarea name="name">{{$user->name}}</textarea>
+  <input name="name" value="{{$user->name}}">
 </p>
 <p>
   <label>Age:</label>
-  <textarea name="age">{{$user->age}}</textarea>
+  <input name="age" value="{{$user->age}}">
 </p>
 <p>
   <label>License_number: </label>
-  <textarea name="license_number">{{$user->license_number}}</textarea>
+  <input name="license_number" value="{{$user->license_number}}">
 </p>
 <p>
   <label>License_type: </label>
-  <textarea name="license_type">{{$user->license_type}}</textarea>
+  <input name="license_type" value="{{$user->license_type}}">
 </p>
 <input type="submit" value="Update this user">
 </form>
