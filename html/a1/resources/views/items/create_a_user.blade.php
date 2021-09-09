@@ -6,19 +6,19 @@
     {{csrf_field()}}
     <p>
       <label>Name</label>
-      <input type="text" name="name" >
+      <input type="text" name="name" required="required" pattern="[A-Za-z0-9]{1,20}">
     </p>
     <p>
       <label>Age</label>
-      <input type="text" name="age" >
+      <input type="number" name="age" min="18" max="98" required="required" pattern="[0-9]{1,2}">
     </p>
     <p>
-      <label>License_number</label>
-      <input type="text" name="license_number" >
+      <label>License number </label>
+      <input type="text" name="license_number" required="required" pattern="[A-Za-z0-9]{8,11}" text="">
     </p>
     <p>
       <label>License type</label>
-      <textarea type="text" name="license_type"></textarea>
+      <textarea type="text" name="license_type" maxlength="20"></textarea>
     </p>
     <input type="submit" value="Create">
   </form>
