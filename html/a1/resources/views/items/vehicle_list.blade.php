@@ -11,4 +11,5 @@
   @else
     No item found
   @endif
+<a href="{{url("create_a_vehicle/$vehicle->id")}}">Create a vehicle</a><br><br>
 @endsection

@@ -35,6 +35,7 @@ Route::get('vehicle_detail/{id}', function($id){
 Route::get('vehicle_delete/{id}', function($id){
     //delete the vehicle according to the id and display the delete message
     delete_vehicle($id);
+    delete_booking($id);
     $sql = "select * from vehicle";
     $vehicles = DB::select($sql);
     return view('items.vehicle_delete')->with('vehicles', $vehicles);
@@ -64,7 +65,8 @@ Route::get('create_a_vehicle/{id}', function($id){
 });
 
 Route::post('create_vehicle_action', function(){
-    //get the information users typed in and add to the vehicle database and display the vehicle list
+    //get the information users typed in and add to the vehicle database 
+    //and display the vehicle list
     $rego = request('rego');
     $model = request('model');
     $year = request('year');
@@ -89,6 +91,7 @@ Route::get('list_users', function(){
 Route::get('user_delete/{id}', function($id){
     //delete the user according to its id and display a delete message
     delete_user($id);
+    delete_users_booking($id);
     $sql = "select * from user";
     $users = DB::select($sql);
     return view('items.user_delete')->with('users', $users);
@@ -156,7 +159,8 @@ Route::post('booking_action', function(){
     $starting_time = request('starting_time');
     $returning_date = request('returning_date');
     $returning_time = request('returning_time');
-    $id = add_booking($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, $starting_time, $returning_date, $returning_time);
+    $id = add_booking($user_id, $user_name, $user_license_number, $vehicle_id, 
+                     $starting_date, $starting_time, $returning_date, $returning_time);
     if ($id){
         $sql = "select * from booking where id='$id'";
         $booking = DB::select($sql);
@@ -185,7 +189,8 @@ Route::get('return_a_vehicle', function(){
 });
 
 Route::post('return_vehicle_action', function(){
-    //This Route update the odometer of a vehicle and delete the booking record from the database
+    //This Route update the odometer of a vehicle and delete the booking record 
+    //from the database
     $distance_driven = request('distance');
     $booking_id = request('booking_id');
     $vehicle_id = request('vehicle_id');
@@ -207,8 +212,10 @@ Route::post('return_vehicle_action', function(){
 });
 
 Route::get('booking_frequency', function(){
-    //this Route links to the page of vehicles that listed by booking numbers in descending order
-    $sql = "select vehicle_id, count(*) as frequency from booking group by vehicle_id order by count(*) DESC";
+    //this Route links to the page of vehicles that listed by booking numbers in 
+    //descending order
+    $sql = "select vehicle_id, count(*) as frequency from booking group by vehicle_id 
+            order by count(*) DESC";
     $bookings = DB::select($sql);
     //dd($bookings);    
     if ($bookings){    
@@ -233,11 +240,13 @@ Route::get('booking_information/{id}', function($id){
 
 Route::get('booking_time_list', function(){
    //this route links to a page which lists the total amount of booking time of every vehicle
-    $sql_1 = "select vehicle_id, sum(JULIANDAY(DATETIME(DATE(returning_date) || ' ' || TIME(returning_time))) - 
-            JULIANDAY(DATETIME(DATE(starting_date) || ' ' || TIME(starting_time)))) as booking_sum from booking 
-            group by vehicle_id order by booking_sum DESC";
-    //this sql query grouped by the vehicle id and calculated the total amount of booking time of each group and ordered in DESC 
-    $bookings = DB::select($sql_1);
+    $sql = "select vehicle_id, 
+            sum(julianday(datetime(date(returning_date) || ' ' || time(returning_time))) - 
+            julianday(datetime(date(starting_date) || ' ' || time(starting_time)))) as booking_sum 
+            from booking group by vehicle_id order by booking_sum DESC";
+    //this sql query grouped by the vehicle id and calculated the total amount of booking time 
+    //of each group and ordered in DESC 
+    $bookings = DB::select($sql);
     //dd($bookings);
     if ($bookings){    
         return view('items.booking_time_list')->with('bookings', $bookings);
@@ -270,14 +279,30 @@ function get_a_booking($id){
 } 
 */
 
-function add_booking($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, $starting_time, $returning_date, $returning_time){
+//Functions below
+
+function add_booking($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, 
+                     $starting_time, $returning_date, $returning_time){
     //add a new booking and return its booking id
-    $sql = "insert into booking (user_id, user_name, user_license_number, vehicle_id, starting_date, starting_time, returning_date, returning_time) values (?, ?, ?, ?, ?, ?, ?, ?)";
-    DB::insert($sql, array($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, $starting_time, $returning_date, $returning_time));
+    $sql = "insert into booking (user_id, user_name, user_license_number, vehicle_id, starting_date, 
+            starting_time, returning_date, returning_time) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    DB::insert($sql, array($user_id, $user_name, $user_license_number, $vehicle_id, $starting_date, 
+                           $starting_time, $returning_date, $returning_time));
     $id = DB::getPdo()->lastinsertId();
     return ($id);
  }
 
+function delete_booking($id) {
+    //delete the all the booking information according to the vehicle id
+    $sql = "delete from booking where vehicle_id = ?";
+    DB::delete($sql, array($id));
+    } 
+
+function delete_users_booking($id) {
+    //delete the all the booking information according to the user id
+    $sql = "delete from booking where user_id = ?";
+    DB::delete($sql, array($id));
+    } 
 
 function add_user($name, $age, $license_number, $license_type){
     //add a new user and return her/his id

@@ -5,8 +5,8 @@
   <form method="post" action="{{url("create_vehicle_action")}}">
     {{csrf_field()}}
     <p>
-      <label>Rego</label>
-      <input type="text" name="rego" >
+      <label for="rego">Rego</label>
+      <input type="text" class="uppercase" id="rego" name="rego" required pattern="[A-Z0-9]{6}" title="Sorry, we don’t cater for personalised number plate. An alphanumeric string of 6 characters is required. Please capitalize your input." >
     </p>
     <p>
       <label>Model</label>
@@ -18,7 +18,7 @@
     </p>
     <p>
       <label>Odometer</label>
-      <textarea type="text" name="odometer"></textarea>
+      <input type="text" name="odometer" required pattern="[0-9]+" title="Please input numbers only">
     </p>
     <input type="submit" value="Create">
   </form>
