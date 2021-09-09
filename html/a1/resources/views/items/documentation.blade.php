@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>Documentation</h1>
-<p><img src="/a1/views/items/er_diagram.jpg" alt="ER diagram"></p>
+<p><img src="https://s5273584.elf.ict.griffith.edu.au/a1/resources/views/items/er_diagram.jpg" alt="ER diagram" style="width:650px;height:600px;"></p>
 <p>2. Describe what you were able to complete, what you were not able to complete.<br>
 I thought I should be able to finish all the validation for the assignment. <br>
 But I spent too much time on figuring out the logic, therefore, I did not complete <br>
