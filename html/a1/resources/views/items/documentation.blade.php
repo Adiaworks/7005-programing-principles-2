@@ -4,9 +4,9 @@
 <h1>Documentation</h1>
 <p><h4>1. ER diagram</h4><img src="https://s5273584.elf.ict.griffith.edu.au/a1/resources/views/items/er_diagram.jpg" alt="ER diagram" style="width:650px;height:600px;"></p>
 <p><h4>2. Describe what you were able to complete, what you were not able to complete.</h4>
-I thought I should be able to finish all the validation for the assignment. <br>
+I thought I should be able to finish all the validations for the assignment. <br>
 But I spent too much time on figuring out the logic, therefore, I did not complete <br>
-all the validations.<br>
+the booking validation 2.<br>
 At the beginning of this assignment, I don’t think I can list the total amount <br>
 of booking time of each vehicle in a descending order. But I discussed with my <br>
 tutor and did some research for the related information and finally I solved the <br>
