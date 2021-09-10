@@ -177,6 +177,32 @@ Route::post('update_user_action/{id}', function($id){
     $users = DB::select($sql);
     return view('items.user_detail')->with('users', $users);
 });
+
+Route::post('booking_action', function(){
+    //this route get the booking information from users' input and display that in a detailed page
+    $user_id = request('user_id');
+    $user_name= request('user_name');
+    $user_license_number = request('license_number');
+    $vehicle_rego = request('vehicle_rego');
+    $sql_1 = "select id from vehicle where rego= '$vehicle_rego'";
+    $vehicles = DB::select($sql_1); 
+    $vehicle_id = $vehicles[0]->id; 
+    $starting_date = request('starting_date');
+    $starting_time = request('starting_time');
+    $returning_date = request('returning_date');
+    $returning_time = request('returning_time');
+    $id = add_booking($user_id, $user_name, $user_license_number, $vehicle_id, 
+                     $starting_date, $starting_time, $returning_date, $returning_time);
+    if ($id){
+        $sql = "select * from booking where id='$id'";
+        $booking = DB::select($sql);
+        return view('items.booking_detail')->with('booking', $booking[0]); 
+    } 
+    else {
+        die("Error while adding a booking.");
+    }
+});
+
 */
 Route::get('list_users', function(){
     //list all the users
@@ -300,16 +326,32 @@ Route::post('booking_action', function(){
     $starting_time = request('starting_time');
     $returning_date = request('returning_date');
     $returning_time = request('returning_time');
-    $id = add_booking($user_id, $user_name, $user_license_number, $vehicle_id, 
-                     $starting_date, $starting_time, $returning_date, $returning_time);
-    if ($id){
-        $sql = "select * from booking where id='$id'";
-        $booking = DB::select($sql);
-        return view('items.booking_detail')->with('booking', $booking[0]); 
-    } 
-    else {
-        die("Error while adding a booking.");
+    $tomorrow = strtotime(date_format(new DateTime('tomorrow'), "Y/m/d H:i:s"));
+    $combined_starting_dt = strtotime(date('Y-m-d H:i:s', strtotime("$starting_date $starting_time")));
+    $combined_returning_dt = strtotime(date('Y-m-d H:i:s', strtotime("$returning_date $returning_time")));
+    //var_dump($tomorrow);
+    $error = "";
+    if (empty($starting_date || $starting_time || $returning_date|| $returning_time)) {
+        echo $error = "Missing value";
     }
+        //Booking validation 1:
+        else if ( $combined_starting_dt < $tomorrow || $combined_returning_dt < $combined_starting_dt) {
+            echo $error = "A starting date and time should start from tomorrow and a returning date and time
+                       must be later than the starting date and time.";
+        }  
+        else {
+            $id = add_booking($user_id, $user_name, $user_license_number, $vehicle_id, 
+                              $starting_date, $starting_time, $returning_date, $returning_time);
+            if ($id){
+                $sql = "select * from booking where id='$id'";
+                $booking = DB::select($sql);
+                return view('items.booking_detail')->with('booking', $booking[0]); 
+            } 
+            else {
+                $error = "Error while adding a booking.";
+                echo $error;
+            }
+        }  
 });
 
 Route::get('documentation', function(){
