@@ -1,31 +1,4 @@
 @extends('layouts.master')
-<?php
-/*
- * Script to print the prime factors of a single positive integer
- * sent from a form.
- * BAD STYLE: Does not use templates.
- */
-include "includes/defs.php";
-
-# Set $number to the value entered in the form.
-$odometer = $_GET['odometer'];
-$error = "";
-
-# Check $number is nonempty, numeric and between 2 and PHP_MAX_INT = 2^31-1.
-# (PHP makes it difficult to do this naturally; see the manual.)
-if (empty($odometer)) {
-  $error = "Error: Missing value";
-} else if (!is_numeric($number)) {
-  $error = "Error: Nonnumeric value: $number";
-} else if ($number < 0 || $number > 999999) {
-  $error = "Error: Invalid number: $number";
-} else {
-  # Set $factors to the array of factors of $number.
-  $factors = factors($number);
-  # Set $factors to a single dot-separated string of numbers in the array.
-  $factors = join(" . ", $factors);
-}
-?>
 
 @section('content')
   <h1>Create a vehicle</h1>

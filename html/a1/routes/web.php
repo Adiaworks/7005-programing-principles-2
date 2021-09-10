@@ -48,15 +48,39 @@ Route::get('vehicle_update/{id}', function($id){
 });
 
 Route::post('update_vehicle_action/{id}', function($id){
-    //get the information users input and display the details updated
+    //get the information users input and then validate the input and display the details updated
     $rego = request('rego');
     $model = request('model');
     $year = request('year');
     $odometer = request('odometer');
-    update_vehicle($id, $rego, $model, $year, $odometer);
-    $vehicle = get_vehicle($id);
-    return view('items.vehicle_detail')->with('vehicle', $vehicle);
+    if (empty($rego || $model || $year || $odometer)) {
+        echo $error = "Missing value";
+    }
+        else if ($rego != ctype_alnum($rego) || strlen($rego) != 6) {
+        echo $error = "A rego must be an alphanumeric string of 6 characters 
+                      (sorry, we don’t cater for personalised number plate).";
+      } 
+        else if ($model != ctype_alnum($model) || strlen($model) > 20) {
+        echo $error = "A model must be an alphanumeric string and no more than 20 characters";
+      } 
+        else if (!is_numeric($year) || strlen($year) != 4 ||  intval(date("Y")) < $year || $year < 1900 ) {
+        echo $error = "A year should be a numeric number between 1900 and the current year in 4 characters.";
+      }
+        else if (!is_numeric($odometer) || $odometer < 0 || $odometer>999999)  {
+        echo $error = "Odometer should be a numeric number, no negative numbers, no more than 999,999.";
+      } 
+        else {  
+            if ($id && empty($error)){
+                update_vehicle($id, $rego, $model, $year, $odometer);
+                $vehicle = get_vehicle($id);
+                return view('items.vehicle_detail')->with('vehicle', $vehicle);
+            } else {
+                $error = "Vehicle update failed.";
+                echo $error;
+            }
+        }
 });
+
 
 Route::get('create_a_vehicle/{id}', function($id){
     //get a new id and display the form for creating a new vehicle
@@ -64,6 +88,43 @@ Route::get('create_a_vehicle/{id}', function($id){
     return view('items.create_a_vehicle')->with('vehicle', $vehicle);
 });
 
+Route::post('create_vehicle_action', function(){
+    //get the information users typed in and then validate the input
+    //and add to the vehicle database and display the vehicle list
+    $rego = request('rego');
+    $model = request('model');
+    $year = request('year');
+    $odometer = request('odometer');
+    $error = "";
+    if (empty($rego || $model || $year || $odometer)) {
+        echo $error = "Missing value";
+    }
+        else if ($rego != ctype_alnum($rego) || strlen($rego) != 6) {
+        echo $error = "A rego must be an alphanumeric string of 6 characters 
+                      (sorry, we don’t cater for personalised number plate).";
+      } 
+        else if ($model != ctype_alnum($model) || strlen($model) > 20) {
+        echo $error = "A model must be an alphanumeric string and no more than 20 characters";
+      } 
+        else if (!is_numeric($year) || strlen($year) != 4 ||  intval(date("Y")) < $year || $year < 1900 ) {
+        echo $error = "A year should be a numeric number between 1900 and the current year in 4 characters.";
+      }
+        else if (!is_numeric($odometer) || $odometer < 0 || $odometer>999999)  {
+        echo $error = "Odometer should be a numeric number, no negative numbers, no more than 999,999.";
+      } 
+        else {
+        $id = add_vehicle($rego, $model, $year, $odometer);
+            if ($id && empty($error)){
+                $sql = "select * from vehicle";
+                $vehicles = DB::select($sql);
+                return view('items.vehicle_list')->with('vehicles', $vehicles);
+            } else {
+                $error = "Vehicle creation failed.";
+                echo $error;
+            }
+        }
+});
+/*
 Route::post('create_vehicle_action', function(){
     //get the information users typed in and add to the vehicle database 
     //and display the vehicle list
@@ -80,7 +141,43 @@ Route::post('create_vehicle_action', function(){
         die("Error while adding a vehicle.");
     }
 });
-
+Route::post('update_vehicle_action/{id}', function($id){
+    //get the information users input and display the details updated
+    $rego = request('rego');
+    $model = request('model');
+    $year = request('year');
+    $odometer = request('odometer');
+    update_vehicle($id, $rego, $model, $year, $odometer);
+    $vehicle = get_vehicle($id);
+    return view('items.vehicle_detail')->with('vehicle', $vehicle);
+});
+Route::post('create_user_action', function(){
+    //this route gets the users' input and display that in a detailed page
+    $name= request('name');
+    $age = request('age');
+    $license_number = request('license_number');
+    $license_type = request('license_type');
+    $id = add_user($name, $age, $license_number, $license_type);
+    if ($id){
+        $sql = "select * from user";
+        $users = DB::select($sql);
+        return view('items.user_detail')->with('users', $users);
+    } else {
+        die("Error while adding a user.");
+    }
+});
+Route::post('update_user_action/{id}', function($id){
+    //this route get the new information and update for users.
+    $name = request('name');
+    $age = request('age');
+    $license_number = request('license_number');
+    $license_type = request('license_type');
+    update_user($id, $name, $age, $license_number, $license_type);
+    $sql = "select * from user";
+    $users = DB::select($sql);
+    return view('items.user_detail')->with('users', $users);
+});
+*/
 Route::get('list_users', function(){
     //list all the users
     $sql = "select * from user";
@@ -109,10 +206,35 @@ Route::post('update_user_action/{id}', function($id){
     $age = request('age');
     $license_number = request('license_number');
     $license_type = request('license_type');
-    update_user($id, $name, $age, $license_number, $license_type);
-    $sql = "select * from user";
-    $users = DB::select($sql);
-    return view('items.user_detail')->with('users', $users);
+
+    if (empty($name || $age || $license_number|| $license_type)) {
+        echo $error = "Missing value";
+    }
+        else if (!ctype_alnum($name) || strlen($name) > 20) {
+        echo $error = "A name must be an alphanumeric string and no more than 20 characters";
+      } 
+        else if (!is_numeric($age) || $age < 17 || $age > 98) {
+        echo $error = "Age must be a numeric number which must be greater than
+                       17 and less than 99";
+      } 
+      else if (!is_numeric($license_number) || strlen($license_number) > 11 || strlen($license_number) < 8) {
+        echo $error = "A license number should be a numeric number and its length must be greater than 7 
+                       and less than 12.";
+      }
+        else if (strlen($license_type) > 20 || strlen($license_type) < 1 )  {
+        echo $error = "The length of a license type should be greater than 0 and less than 21.";
+      } 
+        else {
+            if ($id && empty($error)){
+                update_user($id, $name, $age, $license_number, $license_type);
+                $sql = "select * from user";
+                $users = DB::select($sql);
+                return view('items.user_detail')->with('users', $users);
+            } else {
+                $error = "User update failed.";
+                echo $error;
+            }
+        }
 });
 
 Route::get('create_a_user/{id}', function($id){
@@ -127,14 +249,33 @@ Route::post('create_user_action', function(){
     $age = request('age');
     $license_number = request('license_number');
     $license_type = request('license_type');
-    $id = add_user($name, $age, $license_number, $license_type);
-    if ($id){
-        $sql = "select * from user";
-        $users = DB::select($sql);
-        return view('items.user_detail')->with('users', $users);
-    } else {
-        die("Error while adding a user.");
+
+    if (empty($name || $age || $license_number|| $license_type)) {
+        echo $error = "Missing value";
     }
+        else if (!ctype_alnum($name) || strlen($name) > 20) {
+        echo $error = "A name must be an alphanumeric string and no more than 20 characters";
+      } 
+        else if (!is_numeric($age) || $age < 17 || $age > 98) {
+        echo $error = "Age must be a numeric number which must be greater than 17 and less than 99";
+      } 
+        else if (!is_numeric($license_number) || strlen($license_number) > 11 || strlen($license_number) < 8) {
+        echo $error = "A license number should be a numeric number and its length must be greater than 7 and less than 12.";
+      }
+        else if (strlen($license_type) > 20 || strlen($license_type) < 1 )  {
+        echo $error = "The length of a license type should be greater than 0 and less than 21.";
+      } 
+        else {
+            $id = add_user($name, $age, $license_number, $license_type);
+            if ($id && empty($error)){
+                $sql = "select * from user";
+                $users = DB::select($sql);
+                return view('items.user_detail')->with('users', $users);
+            } else {
+                $error = "User creation failed.";
+                echo $error;
+            }
+        }
 });
 
 Route::get('book_a_vehicle', function(){
