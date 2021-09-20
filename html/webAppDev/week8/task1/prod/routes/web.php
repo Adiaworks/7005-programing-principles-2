@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
 use App\Models\Manufacturer;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,37 +15,25 @@ use App\Models\Manufacturer;
 |
 */
 
+Route::resource('product', ProductController::class);//this resource route linnks to the ProductController
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-/*
-Route::get('/test', function () {
-    
-    //$product = new Product; Create a new row in the products table
-    //$product->name = 'ipod'; filling each column content
-    //$product->price = 19.99;
-    //$product->manufacturer_id = '2';
-    //$product->save();
-    
-    $product = Product::create(array('name' => 'Playstation', 'price' => 555, 'manufacturer_id' => 2));
-    $id = $product->id;
-    dd($product);
+
+Route::get('/test1', function () {
+    $products = Manufacturer::find(1)->products;
+    dd($products);
 });
 
 Route::get('/test2', function () {
-    
-    $products = Product::all();
-    //$manufacturers = Manufacturer::all();
-    //dd($products);
-    foreach ($products as $product) {
-        $manufacturer_id = $product->manufacturer_id;
-        $manufacture_detail = Manufacturer::whereRaw('id = $manufacturer_id')->get();
-        echo $manufacture_detail;
-    }
+    $manufacturer = Product::find(1)->manufacturer;
+    dd($manufacturer);
 });
 
+/*
 Route::get('/test1', function () {
     
     $products = Product::all();
