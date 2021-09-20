@@ -66,7 +66,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('products.edit_form')->with('product', $product)->with('manufacturer', Manufacturer::all());
+        return view('products.edit_form')->with('product', $product)->with('manufacturers', Manufacturer::all());
     }
 
     /**
@@ -96,6 +96,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product->delete();
+        $products = Product::all();
         return view('products.index')->with('products', $products);
     }
 }
