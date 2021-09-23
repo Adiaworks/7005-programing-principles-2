@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;//this line allows us to inherit Model cl
 class Product extends Model //our Product class equals to a child class of Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'price', 'manufacturer_id'];
+    protected $fillable = ['name', 'price'];
     function manufacturer() {
         return $this->belongsTo('App\Models\Manufacturer');
         }
