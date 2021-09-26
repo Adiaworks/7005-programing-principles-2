@@ -28,9 +28,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        $request->authenticate(); //check the login of the user is valid or not
 
-        $request->session()->regenerate();
+        $request->session()->regenerate();//security detail to protect the website from session attack by regenerating session
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

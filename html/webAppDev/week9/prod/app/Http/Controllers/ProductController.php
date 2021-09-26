@@ -8,6 +8,10 @@ use App\Models\Manufacturer;
 
 class ProductController extends Controller
 {
+    function __construct() {
+        $this->middleware('auth', ["except"=>['index', 'show']]);
+        }//this function authenticate all the fucntion except for the index and show which require no login
+
     /**
      * Display a listing of the resource.
      *
