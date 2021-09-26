@@ -1,0 +1,2 @@
+
+f7829f767398a2bf766dd225b400601fbca997d2	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/growly/-/growly-1.3.0.tgz","integrity":"sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=","time":1632648480631,"size":33600,"metadata":{"url":"https://registry.npmjs.org/growly/-/growly-1.3.0.tgz","reqHeaders":{},"resHeaders":{"cache-control":"public, immutable, max-age=31557600","content-type":"application/octet-stream","date":"Sun, 26 Sep 2021 09:27:53 GMT","etag":"\"193788212c3a6fd9c5f1ae9bb98d06bb\"","last-modified":"Sun, 27 May 2018 02:48:50 GMT","vary":"Accept-Encoding"}}}

@@ -1,0 +1,2 @@
+
+b7451ced4b2a99558dde4f120120cb10a8248596	{"key":"make-fetch-happen:request-cache:https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz","integrity":"sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=","time":1632648481638,"size":1676,"metadata":{"url":"https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz","reqHeaders":{},"resHeaders":{"cache-control":"public, immutable, max-age=31557600","content-type":"application/octet-stream","date":"Sun, 26 Sep 2021 09:27:55 GMT","etag":"\"567b1699cfae49cb20f598571a6c90c7\"","last-modified":"Sun, 27 May 2018 22:18:40 GMT","vary":"Accept-Encoding"}}}
