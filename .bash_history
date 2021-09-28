@@ -21,3 +21,18 @@ php artisan migrate
 php artisan migrate
 php artisan migrate
 sqlite3 database/database.salite
+cd html/a2
+php artisan php artisan migrate:refresh --seed
+cd database
+cd cosmetics
+php artisan php artisan migrate:refresh --seed
+cd database
+php artisan php artisan migrate:refresh --seed
+php artisan migratephp artisan migrate:refresh --seed
+php artisan migrate:refresh --seed
+sqlite3 database/database.salite
+cd database
+sqlite3 database/database.salite
+sqlite3 database/database.sqlite
+sqlite3 database/database.sqlite
+php artisan migrate:refresh --seed

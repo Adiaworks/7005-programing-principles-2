@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(ReviewsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(ItemsTableSeeder::class);
+        $this->call(ReviewsTableSeeder::class);
         //this line calls the seeder we want to run. without this line the seeder we added won't work
         
     }
