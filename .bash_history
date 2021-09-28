@@ -9,3 +9,15 @@ php artisan migrate:refresh --seed
 php artisan make:migration create_orders_table
 php artisan make:migration create_orders_table
 php artisan make:migration create_orders_table
+cd a2
+cd html/a2
+cd cosmetics
+php artisan make:migration create_users_table
+php artisan make:migration create_items_table
+touch database/database.sqlite
+php artisan make:migration create_reviews_table
+php artisan migrate
+php artisan migrate
+php artisan migrate
+php artisan migrate
+sqlite3 database/database.salite
