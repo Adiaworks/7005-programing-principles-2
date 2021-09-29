@@ -36,3 +36,7 @@ sqlite3 database/database.salite
 sqlite3 database/database.sqlite
 sqlite3 database/database.sqlite
 php artisan migrate:refresh --seed
+touch database/database.sqlite
+php artisan migrate
+php artisan db:seed –class=DatabaseSeeder
+php artisan db:seed –class=ItemsTableSeeder

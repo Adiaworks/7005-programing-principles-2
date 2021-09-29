@@ -9,4 +9,12 @@ class Review extends Model
 {
     use HasFactory;
     protected $fillable = ['rating', 'content', 'review_created_at'];
+    
+    function users() {
+        return $this->belongsTo('App\Models\User');
+    }
+    
+    function items() {
+        return $this->belongsTo('App\Models\Item');
+    }   
 }
