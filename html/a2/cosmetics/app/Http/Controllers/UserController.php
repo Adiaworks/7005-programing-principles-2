@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Review;
+use App\Models\Item;
 
 
 class UserController extends Controller
@@ -16,7 +18,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index')->with('users', $users);
+        $reviews = Review::all();
+        return view('users.index')->with('users', $users)->with('reviews', $reviews);
     }
 
     /**
@@ -26,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create_form')->with('users', User::all());
     }
 
     /**

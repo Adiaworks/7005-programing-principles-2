@@ -12,6 +12,12 @@
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <style>
+        .user-detail {
+            color: white;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -33,15 +39,34 @@
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a href="{{url("item")}}" class="navbar-brand d-flex align-items-center"><strong>Cosmetics</strong></a>
-                <a href="{{url("user")}}" class="navbar-brand d-flex align-items-center">MyAccount</a> <!--判断是否登录 -->
+                <!--- <a href="{{url("user")}}" class="navbar-brand d-flex align-items-center">MyAccount</a>--->
                 <a href="{{url("documentation")}}" class="navbar-brand d-flex align-items-center">Documentation</a>
+
+                @auth
+                <!--- user is logged in --->
+                <div class="user-detail">
+                    {{Auth::user()->name}}
+                    {{Auth::user()->type}}
+                </div>
+                <form method="POST" action="{{url('/logout')}}">
+                    {{csrf_field()}}
+                    <input type="submit" value="Logout">
+                </form>
+                @else
+                <!--- user is not logged in --->
+                <div>
+                    <a href="{{ route('login') }}"><button>Log in</button></a>
+                    <a href="{{ route('register') }}"><button>Register</button></a>
+                </div>
+                @endauth
             </div>
+
         </div>
-    </header>   
+    </header>
 
     <div class="container">
-        @yield('content') 
-    </div>  
+        @yield('content')
+    </div>
 
     <footer class="text-muted py-5">
         <div class="container">
