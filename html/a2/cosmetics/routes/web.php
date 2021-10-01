@@ -47,8 +47,8 @@ Route::get('/test', function () {
     $review->content = 'I will buy it forever.';
     $review->review_created_at = DB::raw('CURRENT_TIMESTAMP');
     $item = Item::find(6);
-    $user = User::find(4);
     $item->reviews()->save($review);
+    $user = User::find(4);
     $user->reviews()->save($review);
     dd($review);
 

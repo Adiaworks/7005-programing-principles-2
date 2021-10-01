@@ -33,7 +33,7 @@
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a href="{{url("item")}}" class="navbar-brand d-flex align-items-center"><strong>Cosmetics</strong></a>
-                <a href="{{url("user/$user->id")}}" class="navbar-brand d-flex align-items-center">MyAccount</a> <!--判断是否登录 -->
+                <a href="{{url("user")}}" class="navbar-brand d-flex align-items-center">MyAccount</a> <!--判断是否登录 -->
                 <a href="{{url("documentation")}}" class="navbar-brand d-flex align-items-center">Documentation</a>
             </div>
         </div>

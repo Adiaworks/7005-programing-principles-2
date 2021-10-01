@@ -40,3 +40,4 @@ touch database/database.sqlite
 php artisan migrate
 php artisan db:seed –class=DatabaseSeeder
 php artisan db:seed –class=ItemsTableSeeder
+cd html/a2/cosmetic
