@@ -13,6 +13,10 @@ use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
+    public function __construct() {
+        $this->middleware('guest');
+    }// the registration page is only displayed to users that are not logged in
+
     /**
      * Display the registration view.
      *

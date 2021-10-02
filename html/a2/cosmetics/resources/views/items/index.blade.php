@@ -25,10 +25,5 @@
         </div>
     </div>
 </div>
-<p>
-    <form method="GET" action= '{{url("item/create")}}'>
-        {{csrf_field()}} 
-        <input type="submit" value="Create">
-    </form>
-</p>
+
 @endsection

@@ -14,7 +14,7 @@
 @else
     <p>URL: No URL</pp>
 @endif
-    <p>Reviews: {{$item->content}}</p>
+@auth       
     <p>
         <form method="GET" action= '{{url("item/$item->id/edit")}}'>
             {{csrf_field()}}
@@ -29,4 +29,12 @@
             <input type="submit" value="Delete">
         </form>
     </p>
+
+    <p>
+        <form method="GET" action= '{{url("item/create")}}'>
+            {{csrf_field()}} 
+            <input type="submit" value="Create">
+        </form>
+    </p>
+@endauth
 @endsection
