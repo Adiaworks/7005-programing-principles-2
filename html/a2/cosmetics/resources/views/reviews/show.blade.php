@@ -6,6 +6,7 @@
     <p>Price: {{$item->price}}</p>
     <p>Manufacture: {{$item->manufacture_name}}</p>
     <p>Description: {{$item->description}}</p>
+    
 @if ($item->URL)
     <p>
     <label> URL:</label>
@@ -29,4 +30,5 @@
             <input type="submit" value="Delete">
         </form>
     </p>
+{{ $reviews->links()}}
 @endsection

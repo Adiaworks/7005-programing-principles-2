@@ -6,35 +6,47 @@
     <p>Price: {{$item->price}}</p>
     <p>Manufacture: {{$item->manufacture_name}}</p>
     <p>Description: {{$item->description}}</p>
-@if ($item->URL)
-    <p>
-    <label> URL:</label>
-    <a href="{{$item->URL}}">Check this product</a>
-    </p>
-@else
-    <p>URL: No URL</pp>
-@endif
-@auth       
-    <p>
-        <form method="GET" action= '{{url("item/$item->id/edit")}}'>
-            {{csrf_field()}}
-            <input type="submit" value="Edit">
-        </form>
-    <p>
+       
+    @if ($item->URL)
+        <p>
+        <label> URL:</label>
+        <a href="{{$item->URL}}">Check this product</a>
+       </p>
+    @else
+        <p>URL: No URL</pp>
+    @endif
+    
+    @foreach($reviews as $review)
+        <div class="card">
+            <div class="container">
+                <h5><b>Rating: {{$review->rating}}</b></h5>
+                <p>Review: {{$review->content}}</p>
+            </div>
+        </div>
+    @endforeach
 
-    <p>
-        <form method="POST" action= '{{url("item/$item->id")}}'>
-            {{csrf_field()}}
-            {{ method_field('DELETE') }}
-            <input type="submit" value="Delete">
-        </form>
-    </p>
+    @auth       
+        <p>
+            <form method="GET" action= '{{url("item/$item->id/edit")}}'>
+                {{csrf_field()}}
+                <input type="submit" value="Edit">
+            </form>
+        <p>
 
-    <p>
-        <form method="GET" action= '{{url("item/create")}}'>
-            {{csrf_field()}} 
-            <input type="submit" value="Create">
-        </form>
-    </p>
-@endauth
+        <p>
+            <form method="POST" action= '{{url("item/$item->id")}}'>
+                {{csrf_field()}}
+                {{ method_field('DELETE') }}
+                <input type="submit" value="Delete">
+            </form>
+        </p>
+
+        <p>
+            <form method="GET" action= '{{url("item/create")}}'>
+                {{csrf_field()}} 
+                <input type="submit" value="Create">
+            </form>
+        </p>
+    @endauth
+
 @endsection

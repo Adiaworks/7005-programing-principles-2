@@ -33,7 +33,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('items.create_form')->with('reviews', Review::all());
+        return view('items.create_form');
     }
 
     /**
@@ -70,7 +70,8 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::find($id);
-        return view('items.show')->with('item', $item);
+        $reviews = Item::find($id)->reviews;
+        return view('items.show')->with('item', $item)->with('reviews', $reviews);
     }
 
     /**
@@ -99,7 +100,7 @@ class ItemController extends Controller
             'name' => 'required|max:255|unique:items, field',
             'price' => 'required|numeric|min:1',
             'manufacture_name' => 'required|max:255',
-            'description' => 'required|max:255',//blank notice
+            'description' => 'required|max:255',
             'URL' => 'nullable|url'
         ]);
         $item = Item::find($id);
@@ -120,9 +121,12 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
+        //find out the item and delete its releted reviews
         $item = Item::find($id);
         $item->delete();
         $items = Item::all();
+        $reviews = Item::find($id)->reviews;
+        $reviews->delete();//need to be tested
         return view('items.index')->with('items', $items);
     }
 }

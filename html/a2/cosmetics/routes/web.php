@@ -22,9 +22,12 @@ use App\Models\Review;
 */ 
 
 Route::resource('item', ItemController::class);
+
 Route::get('/', [ItemController::class, 'index']);
+
 Route::resource('uer', ItemController::class);
 
+Route::resource('review', ReviewController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
