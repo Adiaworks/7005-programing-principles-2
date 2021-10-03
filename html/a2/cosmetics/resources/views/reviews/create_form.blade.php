@@ -16,6 +16,7 @@
     @endif
     <form method="POST" action='{{url("review")}}'> <!--goes to the store function in the controller via review route -->
         {{csrf_field()}}
+        
         <br>
         <p>
             <label>Rating (from 1 to 5) </label>

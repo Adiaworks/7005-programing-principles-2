@@ -40,6 +40,10 @@
         <p>
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
         </p>
+
+        <p>
+            <input type="file" name="image">
+        </p>
     
         <input type="submit" value="Create"> 
     </form>

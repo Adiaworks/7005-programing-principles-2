@@ -52,9 +52,9 @@ class ReviewController extends Controller
     {
         $this->validate($request, [
             'rating' => 'required|integer|max:5|min:1',
-            'content' => 'required|string|min:6',
+            'content' => 'required|min:6|max:255',
             'item_id' => 'required|integer',
-            'user_id' => 'required|integer'
+            'user_id' => 'required|integer|unique:reviews,user_id,NULL,id,item_id,'.$request->item_id
             ]);
             $review = new Review();
             $review->rating = $request->rating;
@@ -88,7 +88,8 @@ class ReviewController extends Controller
     public function edit($id)
     {
         $review = Review::find($id);
-        return view('reviews.edit_form')->with('review', $review);
+        $item_id = $review->item_id;
+        return view('reviews.edit_form')->with('review', $review)->with('item_id', $item_id);
     }
 
     /**
@@ -103,9 +104,9 @@ class ReviewController extends Controller
         $this->validate($request, [
             //validate the fields
             'rating' => 'required|integer|max:5|min:1',
-            'content' => 'required|string|digits_between: 6, 255',
+            'content' => 'required|min:6|max:255',
             'item_id' => 'required|integer',
-            'user_id' => 'required|integer'
+            'user_id' => 'required|integer|unique:reviews,user_id,NULL,id,item_id,'.$request->item_id
             ]);
             $review = Review::find($id);
             $review->rating = $request->rating;
@@ -113,7 +114,10 @@ class ReviewController extends Controller
             $review->item_id = $request->item_id;
             $review->user_id = $request->user_id;
             $review->save();
-            return view('reviews.show')->with('review', $review);
+            $item_id = $review->item_id;
+            $reviews = Review::where('item_id', '=', $item_id)->paginate(5);
+            $item = Item::find($item_id);
+            return view('items.show')->with('reviews', $reviews)->with('item',$item);
     }
 
     /**
@@ -128,14 +132,12 @@ class ReviewController extends Controller
         $review = Review::find($id);
         $review->delete();
         
-        $reviews = Review::all();
-        $item_id = Review::find($id)->item;
-        $item = Item::find($item_id);
-        $user_ids = Review::where('item_id', '=', $item_id)->get();
+        $item_id = $review->item_id;
+        $reviews = Review::where('item_id', '=', $item_id)->paginate(5);
 
-        $item = Item::find($id);
-        $reviews = Review::where('item_id', '=', $id)->paginate(5);
         $user_ids = Review::where('item_id', '=', $id)->get() ; 
+        $item = Item::find($item_id);
+        
         return view('items.show')->with('item', $item)->with('reviews', $reviews)->with('user_ids', $user_ids);
     }
 }

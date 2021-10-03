@@ -7,5 +7,4 @@
     <p>User: {{$review->user->name}}</p>
     <p>Created at: {{$review->created_at}}</p>
     
-
 @endsection

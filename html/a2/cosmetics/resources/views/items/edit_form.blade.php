@@ -50,6 +50,14 @@
         </p>
 
         <p>
+            <label>Images </label>
+            <input type="file" name="image" value="{{$item->image}}">
+            <div class="alert">
+                {{$errors->first('image')}}
+            </div>
+        </p>
+
+        <p>
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
         </p>
 

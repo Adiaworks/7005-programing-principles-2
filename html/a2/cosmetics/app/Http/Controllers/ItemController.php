@@ -50,16 +50,19 @@ class ItemController extends Controller
             'manufacture_name' => 'required|max:255',
             'description' => 'required|max:255',//blank notice
             'URL' => 'nullable|url',
-            'user_id' => 'required|integer'
+            'user_id' => 'required|integer',
+            'image' => 'nullable|image'
             
             ]);
+            $image_store = request()->file('image')->store('item_images', 'public');
             $item = new Item();
             $item->name = $request->name;
             $item->price = $request->price;
             $item->manufacture_name = $request->manufacture_name;
             $item->description = $request->description;
             $item->URL = $request->URL;
-            $item->user_id = $request->user_id;;
+            $item->user_id = $request->user_id;
+            $item->image = $image_store;
             $item->save();
             return redirect("item/$item->id");
     }
@@ -74,9 +77,10 @@ class ItemController extends Controller
     {
         $item = Item::find($id);
         $reviews = Review::where('item_id', '=', $id)->paginate(5);
-        $user_ids = Review::where('item_id', '=', $id)->get() ; 
+
+        //$user_ids = Review::where('item_id', '=', $id)->get() ; 
         //dd($user_ids);  
-        return view('items.show')->with('item', $item)->with('reviews', $reviews)->with('user_ids', $user_ids);
+        return view('items.show')->with('item', $item)->with('reviews', $reviews);
     }
 
     /**
@@ -107,8 +111,10 @@ class ItemController extends Controller
             'manufacture_name' => 'required|max:255',
             'description' => 'required|max:255',
             'URL' => 'nullable|url',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'image' => 'nullable|image'
         ]);
+        $image_store = request()->file('image')->store('item_images', 'public');
         $item = Item::find($id);
         $item->name = $request->name;
         $item->price = $request->price;
@@ -116,6 +122,7 @@ class ItemController extends Controller
         $item->description = $request->description;
         $item->URL = $request->URL;
         $item->user_id = $request->user_id;
+        $item->image = $image_store;
         $item->save();
         $reviews = Review::where('item_id', '=', $id)->paginate(5);
         return view('items.show')->with('item', $item)->with('reviews', $reviews);

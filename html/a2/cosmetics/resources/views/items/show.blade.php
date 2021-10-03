@@ -3,6 +3,7 @@
 @section('content')
 
     <h2>{{$item->name}}</h2>
+    <img src="{{url($item->image)}}" width="30%" height="auto" alt="Images" role="img" aria-label="Placeholder: Thumbnail" focusable="false">
     <p><b>Price: </b>{{$item->price}}</p>
     <p><b>Manufacture: </b>{{$item->manufacture_name}}</p>
     <p><b>Description: </b>{{$item->description}}</p>
@@ -24,14 +25,13 @@
             <div class="container">
                 <p>Rating: {{$review->rating}}</p>
                 <p>Review: {{$review->content}}</p>
-                <p>Created by: {{$review->user->name}} {{$review->review_created_at}}</p>
+                <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
                 @auth 
                 <div class="line-up">
 
                     @if (Auth::user()->type === "Moderator")                        
-                        <form method="GET" action= '{{url("review/$review->id")}}'>
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}} 
-                            {{ method_field('PUT') }}
                             <input type="submit" value="Update">
                         </form>
 
@@ -42,13 +42,12 @@
                         </form>
                     
                     @elseif ($review->user->id === Auth::user()->id)
-                        <form method="GET" action= '{{url("review/$review->id")}}'>
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}} 
-                            {{ method_field('PUT') }}
                             <input type="submit" value="Update">
                         </form>
 
-                        <form method="GET" action= '{{url("review/$review->id")}}'>
+                        <form method="POST" action= '{{url("review/$review->id")}}'>
                             {{csrf_field()}} 
                             {{ method_field('DELETE') }}
                             <input type="submit" value="Delete">
