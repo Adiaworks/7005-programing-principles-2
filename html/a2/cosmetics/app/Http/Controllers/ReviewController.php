@@ -23,7 +23,7 @@ class ReviewController extends Controller
     public function index()
     {
         $items = Item::all();
-        $reviews = Review::all();
+        $reviews = Review::paginate(6);
         return view('reviews.index')->with('reviews', $reviews)->with('items', $items);
     }
 
@@ -32,9 +32,14 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function create_a_review($item_id)
+    {
+        return view('reviews.create_form')->with('users', User::all())->with('item_id', $item_id);
+    }
+
     public function create()
     {
-        return view('reviews.create_form')->with('users', User::all())->with('items', Item::all());
+        return view('reviews.create_form')->with('users', User::all());
     }
 
     /**
@@ -47,7 +52,7 @@ class ReviewController extends Controller
     {
         $this->validate($request, [
             'rating' => 'required|integer|max:5|min:1',
-            'content' => 'required|string|digits_between: 6, 255',
+            'content' => 'required|string|min:6',
             'item_id' => 'required|integer',
             'user_id' => 'required|integer'
             ]);
@@ -57,7 +62,8 @@ class ReviewController extends Controller
             $review->item_id = $request->item_id;
             $review->user_id = $request->user_id;
             $review->save();
-            return redirect("review/$review->id");
+            $item_id = $request->item_id;
+            return redirect("item/$item_id");
     }
 
     /**
@@ -121,7 +127,15 @@ class ReviewController extends Controller
         //delete releted reviews
         $review = Review::find($id);
         $review->delete();
+        
         $reviews = Review::all();
-        return view('reviews.index')->with('reviews', $reviews);
+        $item_id = Review::find($id)->item;
+        $item = Item::find($item_id);
+        $user_ids = Review::where('item_id', '=', $item_id)->get();
+
+        $item = Item::find($id);
+        $reviews = Review::where('item_id', '=', $id)->paginate(5);
+        $user_ids = Review::where('item_id', '=', $id)->get() ; 
+        return view('items.show')->with('item', $item)->with('reviews', $reviews)->with('user_ids', $user_ids);
     }
 }

@@ -27,12 +27,8 @@
     </div>
 </div>
 
-@auth 
-<p>
-    <form method="GET" action= '{{url("review/create")}}'>
-        {{csrf_field()}} 
-        <input type="submit" value="Create">
-    </form>
-</p>
-@endauth
+<div id="outer">  
+    <div id="inner">{{ $reviews->links()}}</div>
+</div>
+
 @endsection

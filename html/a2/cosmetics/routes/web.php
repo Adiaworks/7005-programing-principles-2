@@ -29,6 +29,8 @@ Route::resource('uer', ItemController::class);
 
 Route::resource('review', ReviewController::class);
 
+Route::get('review/create_a_review/{item_id}', [ReviewController::class, 'create_a_review']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

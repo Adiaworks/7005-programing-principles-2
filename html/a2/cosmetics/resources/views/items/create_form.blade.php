@@ -16,7 +16,6 @@
     @endif
     <form method="POST" action='{{url("item")}}'> <!--goes to the store function in the controller via product route -->
         {{csrf_field()}}
-        {{ method_field('POST') }}
         <br>
         <p>
             <label>Name </label><input type="text" name="name" value="{{old('name')}}"> <!--once error exists, it will direct back to this form and retrieve the value user input -->
@@ -37,6 +36,11 @@
         <p>
             <label>URL </label><input type="text" name="URL"value="{{old('URL')}}">
         </p>
+
+        <p>
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+        </p>
+    
         <input type="submit" value="Create"> 
     </form>
 @endsection

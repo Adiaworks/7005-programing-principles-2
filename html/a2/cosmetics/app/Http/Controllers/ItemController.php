@@ -49,7 +49,9 @@ class ItemController extends Controller
             'price' => 'required|numeric|min:1',
             'manufacture_name' => 'required|max:255',
             'description' => 'required|max:255',//blank notice
-            'URL' => 'nullable|url'
+            'URL' => 'nullable|url',
+            'user_id' => 'required|integer'
+            
             ]);
             $item = new Item();
             $item->name = $request->name;
@@ -57,6 +59,7 @@ class ItemController extends Controller
             $item->manufacture_name = $request->manufacture_name;
             $item->description = $request->description;
             $item->URL = $request->URL;
+            $item->user_id = $request->user_id;;
             $item->save();
             return redirect("item/$item->id");
     }
@@ -70,8 +73,10 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::find($id);
-        $reviews = Item::find($id)->reviews;
-        return view('items.show')->with('item', $item)->with('reviews', $reviews);
+        $reviews = Review::where('item_id', '=', $id)->paginate(5);
+        $user_ids = Review::where('item_id', '=', $id)->get() ; 
+        //dd($user_ids);  
+        return view('items.show')->with('item', $item)->with('reviews', $reviews)->with('user_ids', $user_ids);
     }
 
     /**
@@ -101,7 +106,8 @@ class ItemController extends Controller
             'price' => 'required|numeric|min:1',
             'manufacture_name' => 'required|max:255',
             'description' => 'required|max:255',
-            'URL' => 'nullable|url'
+            'URL' => 'nullable|url',
+            'user_id' => 'required'
         ]);
         $item = Item::find($id);
         $item->name = $request->name;
@@ -109,8 +115,10 @@ class ItemController extends Controller
         $item->manufacture_name = $request->manufacture_name;
         $item->description = $request->description;
         $item->URL = $request->URL;
+        $item->user_id = $request->user_id;
         $item->save();
-        return view('items.show')->with('item', $item);
+        $reviews = Review::where('item_id', '=', $id)->paginate(5);
+        return view('items.show')->with('item', $item)->with('reviews', $reviews);
     }
 
     /**
@@ -123,10 +131,10 @@ class ItemController extends Controller
     {
         //find out the item and delete its releted reviews
         $item = Item::find($id);
+        $reviews = Review::where('item_id', '=', $id);
+        $reviews->delete();//need to be tested
         $item->delete();
         $items = Item::all();
-        $reviews = Item::find($id)->reviews;
-        $reviews->delete();//need to be tested
         return view('items.index')->with('items', $items);
     }
 }

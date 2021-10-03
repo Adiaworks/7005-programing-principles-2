@@ -20,6 +20,8 @@ class CreateItemsTable extends Migration
             $table->string('manufacture_name');
             $table->string('name');
             $table->float('price');
+            $table->unsignedBigInteger('user_id');// foreign key
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

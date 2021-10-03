@@ -17,7 +17,6 @@ class CreateReviewsTable extends Migration
             $table->id();
             $table->integer('rating');
             $table->string('content');
-            $table->timestamp('review_created_at');
             $table->unsignedBigInteger('item_id');// foreign key
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedBigInteger('user_id');// foreign key

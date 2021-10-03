@@ -49,6 +49,10 @@
             </div>
         </p>
 
+        <p>
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+        </p>
+
         <input type="submit" value="Update"> 
     </form>
 @endsection
