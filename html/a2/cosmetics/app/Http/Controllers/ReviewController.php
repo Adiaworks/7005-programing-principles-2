@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
 use App\Models\User;
 use App\Models\Item;
@@ -25,6 +26,38 @@ class ReviewController extends Controller
         $items = Item::all();
         $reviews = Review::paginate(6);
         return view('reviews.index')->with('reviews', $reviews)->with('items', $items);
+    }
+
+    public function like($id)
+    {
+        $this->validate($request, [
+            'item_id' => 'required|integer',
+            'user_id' => 'required|integer|unique:reviews,user_id,NULL,id,item_id,'.$request->item_id
+        ]);
+
+        $review = Review::find($id);//find out the review based on its id
+        $user_ids_like = explode(',', $review->like);//convert the string of user ids who like the review to array
+        $user_ids_dislike = explode(',', $review->dislike);//convert the string of user ids who dislike the review to array
+        $current_user_id = Auth::user()->id;//get current user id
+        dd($current_user_id);
+        if (!in_array($current_user_id, $user_ids_like && !in_array($current_user_id, $user_ids_dislike))//check whether the user id exists in like or dislkie or not 
+        {
+            $user_ids_like = array_push($user_ids_like, $current_user_id);
+            $total_likes = count($user_ids_like);
+
+        }
+
+        
+        $review = Review::find($id);
+        $item_id = $review->item_id;
+        return view('items.edit_form')->with('review', $review)->with('item_id', $item_id);
+    }
+
+    public function dislike($id)
+    {
+        $review = Review::find($id);
+        $item_id = $review->item_id;
+        return view('reviews.edit_form')->with('review', $review)->with('item_id', $item_id);
     }
 
     /**

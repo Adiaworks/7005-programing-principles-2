@@ -33,8 +33,21 @@
                 <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
                 @auth 
                 <div class="line-up">
+                    
+                    <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                        {{csrf_field()}} 
+                        {{ method_field('PUT') }}
+                        <input type="submit" value="Like">
+                    </form>
 
+                    <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                        {{csrf_field()}} 
+                        {{ method_field('PUT') }}
+                        <input type="submit" value="Dislike">
+                    </form>
+                    
                     @if (Auth::user()->type === "Moderator")                        
+                        
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Update">
@@ -47,6 +60,7 @@
                         </form>
                     
                     @elseif ($review->user->id === Auth::user()->id)
+                        
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Update">
@@ -57,6 +71,7 @@
                             {{ method_field('DELETE') }}
                             <input type="submit" value="Delete">
                         </form>
+                    
                     @endif
                 </div>
                 @endauth

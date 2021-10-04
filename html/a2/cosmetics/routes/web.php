@@ -39,6 +39,10 @@ Route::get('item/upload_images/{item_id}', [ItemController::class, 'upload_image
 
 Route::post('item/store_images/{item_id}', [ItemController::class, 'store_images']);
 
+Route::post('item/like/{review_id}', [ReviewController::class, 'like']);
+
+Route::post('item/dislike/{review_id}', [ReviewController::class, 'dislike']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

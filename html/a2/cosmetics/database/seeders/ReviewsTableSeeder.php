@@ -20,6 +20,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 1,
             'user_id' => 2,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 4,
@@ -27,6 +29,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 1,
             'user_id' => 1,
+            'like' => '1,4,6',
+            'dislike' => '2,8',
         ]);
         DB::table('reviews')->insert([
             'rating' => 4,
@@ -34,6 +38,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 1,
             'user_id' => 3,
+            'like' => '10,3,5',
+            'dislike' => '1,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -41,6 +47,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 1,
             'user_id' => 4,
+            'like' => '2,',
+            'dislike' => '3,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -48,6 +56,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 1,
             'user_id' => 5,
+            'like' => '1,7,9',
+            'dislike' => '3,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -55,6 +65,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 1,
             'user_id' => 6,
+            'like' => '1,4,8',
+            'dislike' => '10,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 1,
@@ -62,6 +74,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 1,
             'user_id' => 8,
+            'like' => '2,4,3',
+            'dislike' => '9,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -69,6 +83,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 2,
             'user_id' => 2,
+            'like' => '1,9',
+            'dislike' => '8,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -76,6 +92,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 2,
             'user_id' => 10,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -83,6 +101,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 2,
             'user_id' => 9,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -90,6 +110,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 2,
             'user_id' => 8,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -97,6 +119,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 2,
             'user_id' => 7,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -104,6 +128,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 2,
             'user_id' => 6,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -111,6 +137,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 2,
             'user_id' => 5,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -118,6 +146,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 2,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -125,6 +155,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 3,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -132,6 +164,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 4,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -139,6 +173,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 5,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -146,6 +182,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 6,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -153,6 +191,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 7,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -160,6 +200,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 8,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -167,6 +209,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 9,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -174,6 +218,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 3,
             'user_id' => 10,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -181,6 +227,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 4,
             'user_id' => 6,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -188,6 +236,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 4,
             'user_id' => 5,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -195,6 +245,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 4,
             'user_id' => 4,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -202,6 +254,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 4,
             'user_id' => 3,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -209,6 +263,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 4,
             'user_id' => 2,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 4,
@@ -216,6 +272,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 4,
             'user_id' => 1,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -223,6 +281,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 5,
             'user_id' => 5,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 4,
@@ -230,6 +290,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 5,
             'user_id' => 6,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -237,6 +299,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 5,
             'user_id' => 7,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 4,
@@ -244,6 +308,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 5,
             'user_id' => 8,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -251,6 +317,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 5,
             'user_id' => 9,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -258,6 +326,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 5,
             'user_id' => 10,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -265,6 +335,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 6,
             'user_id' => 5,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -272,6 +344,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 6,
             'user_id' => 6,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -279,6 +353,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 6,
             'user_id' => 7,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -286,6 +362,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 6,
             'user_id' => 8,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -293,6 +371,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 6,
             'user_id' => 9,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -300,6 +380,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 6,
             'user_id' => 10,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -307,6 +389,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 7,
             'user_id' => 7,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -314,6 +398,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 7,
             'user_id' => 6,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -321,6 +407,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 7,
             'user_id' => 5,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -328,6 +416,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 7,
             'user_id' => 4,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -335,6 +425,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 7,
             'user_id' => 3,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -342,6 +434,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 7,
             'user_id' => 2,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         DB::table('reviews')->insert([
             'rating' => 5,
@@ -349,6 +443,8 @@ class ReviewsTableSeeder extends Seeder
             'created_at' => DB::raw('CURRENT_TIMESTAMP'),
             'item_id' => 7,
             'user_id' => 1,
+            'like' => '1,4,5',
+            'dislike' => '2,6',
         ]);
         
     }
