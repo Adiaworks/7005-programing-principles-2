@@ -149,6 +149,40 @@ class ItemController extends Controller
         return view('items.show')->with('item', $item)->with('reviews', $reviews);
     }
 
+    public function upload_images($id)
+    {
+        $item = Item::find($id);
+        return view('items.upload_images')->with('item', $item);
+    }
+
+    public function store_images(Request $request, $id)
+    {
+
+        $this->validate($request, [
+
+            'image' => 'nullable',
+            'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:1280'
+        ]);
+
+        $images = [];
+        if($request->hasfile('images'))
+         {
+            foreach($request->file('images') as $image)
+            {
+                $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
+                $images[] = $image_store;  //add every image into the images array
+                
+            }
+         }
+
+         $item = Item::find($id);
+         $item->image = implode(",", $images);
+         $item->save();
+         $reviews = Review::where('item_id', '=', $id)->paginate(5);
+         return view('items.show')->with('item', $item)->with('reviews', $reviews); 
+    }
+    
+
     /**
      * Remove the specified resource from storage.
      *

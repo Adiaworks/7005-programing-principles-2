@@ -35,6 +35,8 @@ Route::get('documentation', function () {
     return view('documentation.content');
 });
 
+Route::get('item/upload_images/{$item->id}', [ItemController::class, 'upload_images']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

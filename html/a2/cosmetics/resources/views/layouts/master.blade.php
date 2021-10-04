@@ -17,7 +17,13 @@
             display: flex;
             justify-content: center;
         }
-        
+
+        .card-text {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
         .user-detail {
             color: white;
             background-color: transparent;
@@ -26,6 +32,11 @@
 
         .line-up {
             display: flex;
+        }
+
+        a {
+            text-decoration:none;
+            color: black;
         }
 
         .bd-placeholder-img {
