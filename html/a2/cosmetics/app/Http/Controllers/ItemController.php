@@ -52,10 +52,22 @@ class ItemController extends Controller
             'description' => 'required|max:255',
             'URL' => 'nullable|url',
             'user_id' => 'required|integer',
-            'image' => 'required',
+            'image' => 'nullable',
             'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
             ]);
-            $image_store = request()->file('image')->store('item_images', 'public');
+
+            $images = [];
+            if($request->hasfile('images'))
+             {
+                foreach($request->file('images') as $image)
+                {
+                    $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
+                    $images[] = $image_store;  //add every image into the images array    
+                }
+             }
+
+
+            //$image_store = request()->file('image')->store('item_images', 'public');
             $item = new Item();
             $item->name = $request->name;
             $item->price = $request->price;
@@ -63,7 +75,7 @@ class ItemController extends Controller
             $item->description = $request->description;
             $item->URL = $request->URL;
             $item->user_id = $request->user_id;
-            $item->image = $image_store;
+            $item->image = implode(",", $images);
             $item->save();
             return redirect("item/$item->id");
     }
@@ -110,10 +122,20 @@ class ItemController extends Controller
             'description' => 'required|max:255',
             'URL' => 'nullable|url',
             'user_id' => 'required',
-            'image' => 'required',
+            'image' => 'nullable',
             'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:1280'
         ]);
-        $image_store = request()->file('image')->store('item_images', 'public');
+        $images = [];
+        if($request->hasfile('images'))
+         {
+            foreach($request->file('images') as $image)
+            {
+                $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
+                $images[] = $image_store;  //add every image into the images array
+                
+            }
+         }
+
         $item = Item::find($id);
         $item->name = $request->name;
         $item->price = $request->price;
@@ -121,7 +143,7 @@ class ItemController extends Controller
         $item->description = $request->description;
         $item->URL = $request->URL;
         $item->user_id = $request->user_id;
-        $item->image = $image_store;
+        $item->image = implode(",", $images);
         $item->save();
         $reviews = Review::where('item_id', '=', $id)->paginate(5);
         return view('items.show')->with('item', $item)->with('reviews', $reviews);

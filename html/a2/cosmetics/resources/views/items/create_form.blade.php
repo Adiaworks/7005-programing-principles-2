@@ -43,10 +43,13 @@
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
         </p>
 
-        <p>
-            <input type="file" name="image">
-        </p>
-    
+        <div class="custom-file">
+                <input type="file" name="images[]" class="custom-file-input" id="images" multiple="multiple">
+        </div>
+        
+        <br><div>
         <input type="submit" value="Create"> 
+        </div>
+
     </form>
 @endsection

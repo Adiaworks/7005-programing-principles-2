@@ -49,13 +49,13 @@
             </div>
         </p>
 
-        <p>
+        <div class="custom-file">
+            <input type="file" name="images[]" class="custom-file-input" id="images" multiple="multiple">
             <label>Images </label>
-            <input type="file" name="image" value="{{$item->image}}">
-            <div class="alert">
-                {{$errors->first('image')}}
+                <div class="alert">
+                    {{$errors->first('image')}}
+                </div>
             </div>
-        </p>
 
         <p>
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">

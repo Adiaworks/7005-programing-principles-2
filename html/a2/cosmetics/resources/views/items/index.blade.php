@@ -9,7 +9,7 @@
 @foreach($items as $item)
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="{{url($item->image)}}" width="100%" height="300px" style="object-fit: cover" alt="Images" role="img">
+                    <img src="{{url(explode(',',$item->image)[0])}}" width="100%" height="300px" style="object-fit: cover" alt="cosmetic images" role="img">
                     <title>Placeholder</title>
                     <rect width="100%" height="100%" fill="#55595c" />                   
                     <div class="card-body">

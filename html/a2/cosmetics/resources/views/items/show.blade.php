@@ -3,7 +3,12 @@
 @section('content')
 
     <h2>{{$item->name}}</h2>
-    <img src="{{url($item->image)}}" width="30%" height="auto" alt="Images" role="img">
+    @if ($item->image != "")
+        @foreach(explode(',', $item->image) as $image)
+            <img src="{{url($image)}}" style="object-fit: cover" width="30%" height="300px" alt="cosmetic images" role="img">
+        @endforeach
+    @endif
+    
     <p><b>Price: </b>{{$item->price}}</p>
     <p><b>Manufacture: </b>{{$item->manufacture_name}}</p>
     <p><b>Description: </b>{{$item->description}}</p>
