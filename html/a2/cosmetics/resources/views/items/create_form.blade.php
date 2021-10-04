@@ -14,7 +14,7 @@
             </ul>
         </div>
     @endif
-    <form method="POST" action='{{url("item")}}'> <!--goes to the store function in the controller via product route -->
+    <form method="POST" action='{{url("item")}}' enctype="multipart/form-data"> <!--goes to the store function in the controller via product route -->
         {{csrf_field()}}
         <br>
         <p>
@@ -30,11 +30,13 @@
         </p>
         
         <p>
-            <label>Description </label><input type="text" name="description"value="{{old('description')}}">
+            <label>Description </label>
+            <input type="text" name="description"value="{{old('description')}}">
         </p>   
         
         <p>
-            <label>URL </label><input type="text" name="URL"value="{{old('URL')}}">
+            <label>URL </label>
+            <input type="text" name="URL"value="{{old('URL')}}">
         </p>
 
         <p>

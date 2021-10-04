@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <form method="POST" action='{{url("item/$item->id")}}'> <!--goes to the update function in the controller -->
+    <form method="POST" action='{{url("item/$item->id")}}' enctype="multipart/form-data"> <!--goes to the update function in the controller -->
         {{csrf_field()}}
         {{ method_field('PUT') }}
         <br>

@@ -3,7 +3,7 @@
 @section('content')
 
     <h2>{{$item->name}}</h2>
-    <img src="{{url($item->image)}}" width="30%" height="auto" alt="Images" role="img" aria-label="Placeholder: Thumbnail" focusable="false">
+    <img src="{{url($item->image)}}" width="30%" height="auto" alt="Images" role="img">
     <p><b>Price: </b>{{$item->price}}</p>
     <p><b>Manufacture: </b>{{$item->manufacture_name}}</p>
     <p><b>Description: </b>{{$item->description}}</p>

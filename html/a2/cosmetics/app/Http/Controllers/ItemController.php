@@ -11,8 +11,9 @@ class ItemController extends Controller
 {
     function __construct() 
     {
+        //this function authenticate all the fucntion except for the index and show which require no login
         $this->middleware('auth', ["except"=>['index', 'show']]);
-    }//this function authenticate all the fucntion except for the index and show which require no login
+    }
     
     /**
      * Display a listing of the resource.
@@ -48,11 +49,11 @@ class ItemController extends Controller
             'name' => 'required|max:255|unique:items, field',
             'price' => 'required|numeric|min:1',
             'manufacture_name' => 'required|max:255',
-            'description' => 'required|max:255',//blank notice
+            'description' => 'required|max:255',
             'URL' => 'nullable|url',
             'user_id' => 'required|integer',
-            'image' => 'nullable|image'
-            
+            'image' => 'required',
+            'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
             ]);
             $image_store = request()->file('image')->store('item_images', 'public');
             $item = new Item();
@@ -76,10 +77,7 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::find($id);
-        $reviews = Review::where('item_id', '=', $id)->paginate(5);
-
-        //$user_ids = Review::where('item_id', '=', $id)->get() ; 
-        //dd($user_ids);  
+        $reviews = Review::where('item_id', '=', $id)->paginate(5);  
         return view('items.show')->with('item', $item)->with('reviews', $reviews);
     }
 
@@ -112,7 +110,8 @@ class ItemController extends Controller
             'description' => 'required|max:255',
             'URL' => 'nullable|url',
             'user_id' => 'required',
-            'image' => 'nullable|image'
+            'image' => 'required',
+            'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:1280'
         ]);
         $image_store = request()->file('image')->store('item_images', 'public');
         $item = Item::find($id);
@@ -139,7 +138,7 @@ class ItemController extends Controller
         //find out the item and delete its releted reviews
         $item = Item::find($id);
         $reviews = Review::where('item_id', '=', $id);
-        $reviews->delete();//need to be tested
+        $reviews->delete();
         $item->delete();
         $items = Item::all();
         return view('items.index')->with('items', $items);
