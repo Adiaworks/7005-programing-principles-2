@@ -21,7 +21,7 @@
         .card-text {
             position: relative;
             text-align: center;
-            color: white;
+            color: black;
         }
 
         .user-detail {

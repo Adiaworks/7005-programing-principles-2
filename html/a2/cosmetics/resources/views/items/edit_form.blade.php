@@ -50,7 +50,7 @@
         </p>
 
         <div class="custom-file">
-            <input type="file" name="images[]" class="custom-file-input" id="images" multiple="multiple">
+            <input type="file" name="images[]" class="custom-file-input" id="images" multiple="multiple" value="{{$item->image}}">
             <label>Images </label>
                 <div class="alert">
                     {{$errors->first('image')}}

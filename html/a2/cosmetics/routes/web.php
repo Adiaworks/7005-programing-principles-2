@@ -35,7 +35,9 @@ Route::get('documentation', function () {
     return view('documentation.content');
 });
 
-Route::get('item/upload_images/{$item->id}', [ItemController::class, 'upload_images']);
+Route::get('item/upload_images/{item_id}', [ItemController::class, 'upload_images']);
+
+Route::post('item/store_images/{item_id}', [ItemController::class, 'store_images']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

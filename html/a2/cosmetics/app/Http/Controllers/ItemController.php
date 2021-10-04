@@ -56,17 +56,6 @@ class ItemController extends Controller
             'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
             ]);
 
-            $images = [];
-            if($request->hasfile('images'))
-             {
-                foreach($request->file('images') as $image)
-                {
-                    $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
-                    $images[] = $image_store;  //add every image into the images array    
-                }
-             }
-
-
             //$image_store = request()->file('image')->store('item_images', 'public');
             $item = new Item();
             $item->name = $request->name;
@@ -75,7 +64,16 @@ class ItemController extends Controller
             $item->description = $request->description;
             $item->URL = $request->URL;
             $item->user_id = $request->user_id;
-            $item->image = implode(",", $images);
+            $images = [];
+            if($request->hasfile('images'))
+             {
+                foreach($request->file('images') as $image)
+                {
+                    $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
+                    $images[] = $image_store;  //add every image into the images array
+                    $item->image = implode(",", $images);
+                }
+             }
             $item->save();
             return redirect("item/$item->id");
     }
@@ -125,16 +123,6 @@ class ItemController extends Controller
             'image' => 'nullable',
             'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:1280'
         ]);
-        $images = [];
-        if($request->hasfile('images'))
-         {
-            foreach($request->file('images') as $image)
-            {
-                $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
-                $images[] = $image_store;  //add every image into the images array
-                
-            }
-         }
 
         $item = Item::find($id);
         $item->name = $request->name;
@@ -143,7 +131,16 @@ class ItemController extends Controller
         $item->description = $request->description;
         $item->URL = $request->URL;
         $item->user_id = $request->user_id;
-        $item->image = implode(",", $images);
+        $images = [];
+        if($request->hasfile('images'))
+         {
+            foreach($request->file('images') as $image)
+            {
+                $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
+                $images[] = $image_store;  //add every image into the images array
+                $item->image = implode(",", $images);
+            }
+         }
         $item->save();
         $reviews = Review::where('item_id', '=', $id)->paginate(5);
         return view('items.show')->with('item', $item)->with('reviews', $reviews);
@@ -152,34 +149,38 @@ class ItemController extends Controller
     public function upload_images($id)
     {
         $item = Item::find($id);
-        return view('items.upload_images')->with('item', $item);
+        // $user_name = $request->user_name;->with('user_name', $user_name)
+        return view("items.upload_images")->with('item', $item);
     }
 
     public function store_images(Request $request, $id)
     {
 
         $this->validate($request, [
-
-            'image' => 'nullable',
-            'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:1280'
+            'images' => 'nullable',//how to limit the file type of the mutiple files uploaded
+            'images.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
         ]);
-
+        $item = Item::find($id);
         $images = [];
         if($request->hasfile('images'))
-         {
-            foreach($request->file('images') as $image)
+        {
+             foreach($request->file('images') as $image)
             {
                 $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
                 $images[] = $image_store;  //add every image into the images array
-                
-            }
-         }
 
-         $item = Item::find($id);
-         $item->image = implode(",", $images);
-         $item->save();
-         $reviews = Review::where('item_id', '=', $id)->paginate(5);
-         return view('items.show')->with('item', $item)->with('reviews', $reviews); 
+                $new_image = implode(",", $images);
+            }
+        }
+        $current_images = $item->image;
+        $string = $current_images. "," . $new_image ;
+        if( $string[0] === ',' ) {
+            $string = substr($string,1);
+        }
+        $item->image = $string;
+        $item->save();
+        $reviews = Review::where('item_id', '=', $id)->paginate(5);
+        return view('items.show')->with('item', $item)->with('reviews', $reviews); 
     }
     
 

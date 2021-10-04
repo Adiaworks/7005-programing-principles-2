@@ -64,9 +64,9 @@
         </div><br>
     @endforeach
 
-    <div id="inner">
+    
     @auth 
-        
+    <div id="inner">
         @if (Auth::user()->type === "Moderator")
             <form method="GET" action= '{{url("item/$item->id/edit")}}'>
                 {{csrf_field()}}
@@ -94,9 +94,9 @@
             {{csrf_field()}} 
             <input type="submit" value="Upload images">
         </form>
-        
+        </div><br>    
     @endauth
-    </div><br>
+    
 
     <div id="outer">  
         <div id="inner">{{ $reviews->links()}}</div>

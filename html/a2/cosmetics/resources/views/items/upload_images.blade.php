@@ -1,7 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
+<h2>Upload your images here</h2><br>
 <form method="POST" action='{{url("item/store_images/$item->id")}}' enctype="multipart/form-data">
+    {{csrf_field()}} 
+    
     <div class="custom-file">
         <input type="file" name="images[]" class="custom-file-input" id="images" multiple="multiple">
     </div>
@@ -11,7 +14,7 @@
     </p>
 
     <br><div>
-        <input type="submit" value="Create"> 
+        <input type="submit" value="Upload"> 
     </div>
 </form>
 @endsection
