@@ -155,11 +155,11 @@ class ItemController extends Controller
 
     public function store_images(Request $request, $id)
     {
-
         $this->validate($request, [
             'images' => 'nullable',//how to limit the file type of the mutiple files uploaded
             'images.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
         ]);
+
         $item = Item::find($id);
         $images = [];
         if($request->hasfile('images'))
@@ -168,19 +168,17 @@ class ItemController extends Controller
             {
                 $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
                 $images[] = $image_store;  //add every image into the images array
-
                 $new_image = implode(",", $images);
+                $current_images = $item->image;
+                if ($current_images === "") {
+                    $item->image = $new_image;
+                } else {
+                    $item->image = $current_images . "," . $new_image;
+                }
             }
         }
-        $current_images = $item->image;
-        $string = $current_images. "," . $new_image ;
-        if( $string[0] === ',' ) {
-            $string = substr($string,1);
-        }
-        $item->image = $string;
         $item->save();
-        $reviews = Review::where('item_id', '=', $id)->paginate(5);
-        return view('items.show')->with('item', $item)->with('reviews', $reviews); 
+        return redirect("item/$item->id");
     }
     
 
