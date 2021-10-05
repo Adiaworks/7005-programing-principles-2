@@ -52,11 +52,7 @@ class ReviewController extends Controller
         $review->save();
         $review = Review::find($id);
         $item_id = $review->item_id;
-        $item = Item::find($item_id);
-        $reviews = Review::where('item_id', '=', $item_id)->paginate(5);  
-        return view('items.show')->with('item', $item)->with('reviews', $reviews);
-        //return redirect("item/$item_id");
-        //return view('items.show')->with('review', $review)->with('item_id', $item_id);
+        return redirect("item/$item_id");
     }
 
     public function dislike($id)
@@ -83,9 +79,7 @@ class ReviewController extends Controller
         $review->save();
         $review = Review::find($id);
         $item_id = $review->item_id;
-        $item = Item::find($item_id);
-        $reviews = Review::where('item_id', '=', $item_id)->paginate(5);  
-        return view('items.show')->with('item', $item)->with('reviews', $reviews);
+        return redirect("item/$item_id");
     }
 
     /**
@@ -173,13 +167,15 @@ class ReviewController extends Controller
             'like' => 'nullable',
             'dislike' => 'nullable',
             'item_id' => 'required|integer',
-            'user_id' => 'required|integer|unique:reviews,user_id,NULL,id,item_id,'.$request->item_id
+            'user_id' => 'required|integer'
             ]);
             $review = Review::find($id);
             $review->rating = $request->rating;
             $review->content = $request->content;
             $review->item_id = $request->item_id;
             $review->user_id = $request->user_id;
+            $review->like = $request->like;
+            $review->dislike = $request->dislike;
             $review->save();
             $item_id = $review->item_id;
             $reviews = Review::where('item_id', '=', $item_id)->paginate(5);

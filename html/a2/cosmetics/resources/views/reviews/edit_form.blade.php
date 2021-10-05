@@ -33,6 +33,14 @@
             <input type="hidden" name="item_id" value="{{$item_id}}"> 
         </p>
 
+        <p>
+            <input type="hidden" name="like" value="{{$review->like}}"> 
+        </p>
+
+        <p>
+            <input type="hidden" name="dislike" value="{{$review->dislike}}"> 
+        </p>
+
         <input type="submit" value="Update"> 
     </form>
 @endsection

@@ -43,6 +43,7 @@
                         <form method="POST" action= '{{url("review/like/$review->id")}}'>
                             {{csrf_field()}}
                             <input type="submit" value="Like({{count(explode(',', $review->like))}})">
+                            {{$review->like}}
                         </form>
                     @endif
 
@@ -55,6 +56,7 @@
                         <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Dislike({{count(explode(',', $review->dislike))}})">
+                            {{$review->dislike}}
                         </form>
                     @endif
 
@@ -75,7 +77,7 @@
                         
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}} 
-                            <input type="submit" value="Update">
+                            <input type="submit" value="Edit">
                         </form>
 
                         <form method="POST" action= '{{url("review/$review->id")}}'>
