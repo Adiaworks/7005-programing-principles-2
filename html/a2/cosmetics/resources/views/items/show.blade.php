@@ -34,23 +34,35 @@
                 @auth 
                 <div class="line-up">
                     
-                    <form method="POST" action= '{{url("review/like/$review->id")}}'>
-                        {{csrf_field()}} 
-                        {{ method_field('PUT') }}
-                        <input type="submit" value="Like">
-                    </form>
+                    @if ($review->like === NULL) 
+                        <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Like({{(count(explode(',', $review->like))-1)}})">
+                        </form>
+                    @else
+                        <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Like({{count(explode(',', $review->like))}})">
+                        </form>
+                    @endif
 
-                    <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
-                        {{csrf_field()}} 
-                        {{ method_field('PUT') }}
-                        <input type="submit" value="Dislike">
-                    </form>
-                    
+                    @if ($review->dislike === NULL)
+                        <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                            {{csrf_field()}} 
+                            <input type="submit" value="Dislike({{(count(explode(',', $review->dislike))-1)}})">
+                        </form>
+                    @else
+                        <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                            {{csrf_field()}} 
+                            <input type="submit" value="Dislike({{count(explode(',', $review->dislike))}})">
+                        </form>
+                    @endif
+
                     @if (Auth::user()->type === "Moderator")                        
                         
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}}
-                            <input type="submit" value="Update">
+                            <input type="submit" value="Edit">
                         </form>
 
                         <form method="POST" action= '{{url("review/$review->id")}}'>
@@ -79,7 +91,11 @@
         </div><br>
     @endforeach
 
-    
+    <div id="outer">  
+        <div id="inner">{{ $reviews->links()}}</div>
+    </div>
+
+
     @auth 
     <div id="inner">
         @if (Auth::user()->type === "Moderator")
@@ -111,10 +127,5 @@
         </form>
         </div><br>    
     @endauth
-    
-
-    <div id="outer">  
-        <div id="inner">{{ $reviews->links()}}</div>
-    </div>
 
 @endsection

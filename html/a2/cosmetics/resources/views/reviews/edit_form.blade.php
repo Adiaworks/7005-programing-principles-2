@@ -24,14 +24,6 @@
                 {{$errors->first('content')}}
             </div>
         </p>
-       
-        <p>
-            <input type="hidden" name="like" value="{{$review->like}}">  
-        </p>
-
-        <p>
-            <input type="hidden" name="dislike" value="{{$review->dislike}}">  
-        </p>
         
         <p>
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">  

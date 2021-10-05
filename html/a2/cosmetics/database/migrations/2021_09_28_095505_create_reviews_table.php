@@ -17,8 +17,8 @@ class CreateReviewsTable extends Migration
             $table->id();
             $table->integer('rating');
             $table->string('content');
-            $table->string('like');
-            $table->string('dislike');
+            $table->string('like')->nullable();
+            $table->string('dislike')->nullable();
             $table->unsignedBigInteger('item_id');// foreign key
             $table->foreign('item_id')->references('id')->on('items');
             $table->unsignedBigInteger('user_id');// foreign key

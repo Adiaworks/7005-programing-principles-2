@@ -30,34 +30,62 @@ class ReviewController extends Controller
 
     public function like($id)
     {
-        $this->validate($request, [
-            'item_id' => 'required|integer',
-            'user_id' => 'required|integer|unique:reviews,user_id,NULL,id,item_id,'.$request->item_id
-        ]);
-
         $review = Review::find($id);//find out the review based on its id
         $user_ids_like = explode(',', $review->like);//convert the string of user ids who like the review to array
         $user_ids_dislike = explode(',', $review->dislike);//convert the string of user ids who dislike the review to array
-        $current_user_id = Auth::user()->id;//get current user id
-        dd($current_user_id);
-        if (!in_array($current_user_id, $user_ids_like && !in_array($current_user_id, $user_ids_dislike))//check whether the user id exists in like or dislkie or not 
-         {
-            $user_ids_like = array_push($user_ids_like, $current_user_id);
-            $total_likes = count($user_ids_like);
-
-         }
-
+        $current_user_id = Auth::user()->id;//get current user id(int) who clicks on the like button
         
+        if ($review->like === NULL) 
+        {
+            if (!in_array($current_user_id, $user_ids_dislike))
+            {
+               $review->like = strval($current_user_id);
+            }
+
+        } 
+        elseif ($review->like != NULL && !in_array($current_user_id, $user_ids_like) && !in_array($current_user_id, $user_ids_dislike))
+        {  
+            //$user_ids_like = array_push($user_ids_like, '$current_user_id');
+            $review->like = $review->like . "," . strval($current_user_id);
+        }
+        
+        $review->save();
         $review = Review::find($id);
         $item_id = $review->item_id;
-        return view('items.edit_form')->with('review', $review)->with('item_id', $item_id);
+        $item = Item::find($item_id);
+        $reviews = Review::where('item_id', '=', $item_id)->paginate(5);  
+        return view('items.show')->with('item', $item)->with('reviews', $reviews);
+        //return redirect("item/$item_id");
+        //return view('items.show')->with('review', $review)->with('item_id', $item_id);
     }
 
     public function dislike($id)
     {
+        $review = Review::find($id);//find out the review based on its id
+        $user_ids_like = explode(',', $review->like);//convert the string of user ids who like the review to array
+        $user_ids_dislike = explode(',', $review->dislike);//convert the string of user ids who dislike the review to array
+        $current_user_id = Auth::user()->id;//get current user id(int) who clicks on the dislike button
+        
+        if ($review->dislike === NULL) 
+        {
+            if (!in_array($current_user_id, $user_ids_like))
+            {
+               $review->dislike = strval($current_user_id);
+            }
+
+        } 
+        elseif ($review->dislike != NULL && !in_array($current_user_id, $user_ids_like) && !in_array($current_user_id, $user_ids_dislike))
+        {  
+            //$user_ids_like = array_push($user_ids_like, '$current_user_id');
+            $review->dislike = $review->dislike . "," . strval($current_user_id);
+        }
+        
+        $review->save();
         $review = Review::find($id);
         $item_id = $review->item_id;
-        return view('reviews.edit_form')->with('review', $review)->with('item_id', $item_id);
+        $item = Item::find($item_id);
+        $reviews = Review::where('item_id', '=', $item_id)->paginate(5);  
+        return view('items.show')->with('item', $item)->with('reviews', $reviews);
     }
 
     /**
@@ -86,6 +114,8 @@ class ReviewController extends Controller
         $this->validate($request, [
             'rating' => 'required|integer|max:5|min:1',
             'content' => 'required|min:6|max:255',
+            'like' => 'nullable',
+            'dislike' => 'nullable',
             'item_id' => 'required|integer',
             'user_id' => 'required|integer|unique:reviews,user_id,NULL,id,item_id,'.$request->item_id
             ]);
@@ -94,6 +124,8 @@ class ReviewController extends Controller
             $review->content = $request->content;
             $review->item_id = $request->item_id;
             $review->user_id = $request->user_id;
+            $review->like = NULL;
+            $review->dislike = NULL;
             $review->save();
             $item_id = $request->item_id;
             return redirect("item/$item_id");
@@ -138,6 +170,8 @@ class ReviewController extends Controller
             //validate the fields
             'rating' => 'required|integer|max:5|min:1',
             'content' => 'required|min:6|max:255',
+            'like' => 'nullable',
+            'dislike' => 'nullable',
             'item_id' => 'required|integer',
             'user_id' => 'required|integer|unique:reviews,user_id,NULL,id,item_id,'.$request->item_id
             ]);
@@ -146,11 +180,6 @@ class ReviewController extends Controller
             $review->content = $request->content;
             $review->item_id = $request->item_id;
             $review->user_id = $request->user_id;
-            $like_number = count(explode(',', $request->like));
-            if ($like_number > 0){//判断此处like的数量为空或非空，决定显不显示
-                $review-> = $like_number;
-            }
-            
             $review->save();
             $item_id = $review->item_id;
             $reviews = Review::where('item_id', '=', $item_id)->paginate(5);
