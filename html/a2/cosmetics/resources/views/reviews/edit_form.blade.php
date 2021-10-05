@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <form method="POST" action="{{url("review/$review->id")}}"> <!--goes to the update function in the controller -->
+    <form method="POST" action='{{url("review/$review->id")}}'> <!--goes to the update function in the controller -->
         {{csrf_field()}}
         {{ method_field('PUT') }}
         <br>
@@ -23,6 +23,14 @@
             <div class="alert">
                 {{$errors->first('content')}}
             </div>
+        </p>
+       
+        <p>
+            <input type="hidden" name="like" value="{{$review->like}}">  
+        </p>
+
+        <p>
+            <input type="hidden" name="dislike" value="{{$review->dislike}}">  
         </p>
         
         <p>

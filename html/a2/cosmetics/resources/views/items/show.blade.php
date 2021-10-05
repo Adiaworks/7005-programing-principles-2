@@ -49,7 +49,7 @@
                     @if (Auth::user()->type === "Moderator")                        
                         
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
-                            {{csrf_field()}} 
+                            {{csrf_field()}}
                             <input type="submit" value="Update">
                         </form>
 

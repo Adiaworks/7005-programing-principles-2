@@ -41,11 +41,11 @@ class ReviewController extends Controller
         $current_user_id = Auth::user()->id;//get current user id
         dd($current_user_id);
         if (!in_array($current_user_id, $user_ids_like && !in_array($current_user_id, $user_ids_dislike))//check whether the user id exists in like or dislkie or not 
-        {
+         {
             $user_ids_like = array_push($user_ids_like, $current_user_id);
             $total_likes = count($user_ids_like);
 
-        }
+         }
 
         
         $review = Review::find($id);
@@ -146,6 +146,11 @@ class ReviewController extends Controller
             $review->content = $request->content;
             $review->item_id = $request->item_id;
             $review->user_id = $request->user_id;
+            $like_number = count(explode(',', $request->like));
+            if ($like_number > 0){//判断此处like的数量为空或非空，决定显不显示
+                $review-> = $like_number;
+            }
+            
             $review->save();
             $item_id = $review->item_id;
             $reviews = Review::where('item_id', '=', $item_id)->paginate(5);
