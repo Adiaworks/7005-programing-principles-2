@@ -66,7 +66,7 @@
                 @auth
                 <!--- user is logged in --->
                 <div class="user-detail">
-                    <a href='{{url("user/show/Auth::user()->id")}}' class="navbar-brand d-flex align-items-center">{{Auth::user()->name}}</a>
+                    <a href="{{url('user',Auth::user()->id)}}" class="navbar-brand d-flex align-items-center">{{Auth::user()->name}}</a>
                     <strong>{{Auth::user()->type}}</strong>
                 </div>
                 <form method="POST" action="{{url('/logout')}}">

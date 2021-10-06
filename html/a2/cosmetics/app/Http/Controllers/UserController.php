@@ -52,10 +52,19 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $reviews= Review::where('user_id', '=', $id); 
-        return view('users.show')->with('user', $user)->with('reviews', $reviews);
+        //$reviews= Review::where('user_id', '=', $id); 
+        return view('users.show')->with('user', $user);
     }
 
+    public function following_list($current_user_id)
+    {
+        $user = User::find($current_user_id);
+        $following_ids = $user->following;
+        
+        //$reviews= Review::where('user_id', '=', $id); 
+        return view('users.show')->with('user', $user);
+    }
+    
     /**
      * Show the form for editing the specified resource.
      *

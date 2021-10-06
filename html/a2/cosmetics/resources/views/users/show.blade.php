@@ -5,13 +5,11 @@
     <h2>{{$user->name}}</h2>
     <p>{{$user->type}}</p>
     @if ($user->following != NULL)
-        @foreach(explode(',', $user->following) as $user_id)
-        {{$user_id}}
-
-        @endforeach
-
+        <p>
+        <a href='{{url("user/following_list/",Auth::user()->id)}}'>Following list </a>
+        </p>
     @else
-    <p><b>Following: </b> No following now</p>
+        <p><b>Following: </b> No following now</p>
     @endif
 
 @endsection
