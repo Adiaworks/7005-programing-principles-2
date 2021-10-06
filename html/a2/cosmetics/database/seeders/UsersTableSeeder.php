@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => DB::raw('CURRENT_TIMESTAMP'),
             'password' => bcrypt('1234'),
             'type' => 'Moderator',
-            'following' => '2,3,6',
+            'following' => '2,6',
         ]);
         DB::table('users')->insert([
             'name' => "Chris",
@@ -28,7 +28,6 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => DB::raw('CURRENT_TIMESTAMP'),
             'password' => bcrypt('1234'),
             'type' => 'Moderator',
-            'following' => '4,3,6',
         ]);
         DB::table('users')->insert([
             'name' => "Member",
@@ -36,7 +35,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => DB::raw('CURRENT_TIMESTAMP'),
             'password' => bcrypt('1234'),
             'type' => 'Member',
-            'following' => '2,7,8',
+
         ]);
         DB::table('users')->insert([
             'name' => "Cara",
@@ -44,7 +43,7 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => DB::raw('CURRENT_TIMESTAMP'),
             'password' => bcrypt('1234'),
             'type' => 'Member',
-            'following' => '9,3,10',
+            'following' => '10',
         ]);
         DB::table('users')->insert([
             'name' => "Bob",
@@ -60,7 +59,6 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => DB::raw('CURRENT_TIMESTAMP'),
             'password' => bcrypt('1234'),
             'type' => 'Member',
-            'following' => '1,2,7',
         ]);
         DB::table('users')->insert([
             'name' => "Alice",
@@ -76,7 +74,6 @@ class UsersTableSeeder extends Seeder
             'email_verified_at' => DB::raw('CURRENT_TIMESTAMP'),
             'password' => bcrypt('1234'),
             'type' => 'Member',
-            'following' => '9,3,8',
         ]);
         DB::table('users')->insert([
             'name' => "Tony",

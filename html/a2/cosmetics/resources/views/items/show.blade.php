@@ -19,7 +19,7 @@
         <a href="{{$item->URL}}">Check this product</a>
         </p>
     @else
-        <p><b>URL: </b> No URL</pp>
+        <p><b>URL: </b> No URL</p>
     @endif
     
     <p>

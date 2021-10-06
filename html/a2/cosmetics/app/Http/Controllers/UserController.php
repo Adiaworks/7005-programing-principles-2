@@ -51,7 +51,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        $reviews= Review::where('user_id', '=', $id); 
+        return view('users.show')->with('user', $user)->with('reviews', $reviews);
     }
 
     /**

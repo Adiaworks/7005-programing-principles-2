@@ -59,15 +59,15 @@
     <header>
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a href="{{url("item")}}" class="navbar-brand d-flex align-items-center"><strong>Cosmetics</strong></a>
-                <a href="{{url("review")}}" class="navbar-brand d-flex align-items-center">Reviews</a>
-                <a href="{{url("documentation")}}" class="navbar-brand d-flex align-items-center">Documentation</a>
+                <a href='{{url("item")}}' class="navbar-brand d-flex align-items-center">Cosmetics</a>
+                <a href='{{url("review")}}' class="navbar-brand d-flex align-items-center">Reviews</a>
+                <a href='{{url("documentation")}}' class="navbar-brand d-flex align-items-center">Documentation</a>
 
                 @auth
                 <!--- user is logged in --->
                 <div class="user-detail">
-                    {{Auth::user()->name}}
-                    {{Auth::user()->type}}
+                    <a href='{{url("user/Auth::user()->id")}}' class="navbar-brand d-flex align-items-center">{{Auth::user()->name}}</a>
+                    <strong>{{Auth::user()->type}}</strong>
                 </div>
                 <form method="POST" action="{{url('/logout')}}">
                     {{csrf_field()}}
