@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
-    protected $fillable = ['rating', 'content', 'review_created_at'];
+    protected $fillable = ['rating', 'content', 'review_created_at', 'like', 'dislike'];
     
     function user() {
         return $this->belongsTo('App\Models\User');

@@ -43,7 +43,9 @@ Route::post('review/like/{review_id}', [ReviewController::class, 'like']);
 
 Route::post('review/dislike/{review_id}', [ReviewController::class, 'dislike']);
 
-Route::post('user/following_list/{current_user_id}', [UserController::class, 'following_list']);
+Route::post('user/unfollow/{user_id}', [UserController::class, 'unfollow']);
+
+Route::post('user/follow/{user_id}', [UserController::class, 'follow']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

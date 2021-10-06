@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\Item;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -51,18 +53,33 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        //$reviews= Review::where('user_id', '=', $id); 
-        return view('users.show')->with('user', $user);
+        //$user = User::find($id);
+        
+        $user = User::where('id', '=', $id)->first();
+        if (($user->following) != NULL){
+            $following_ids = explode(',', $user->following);
+            $reviews = new Collection();//set up a blank Collection
+            foreach ($following_ids as $following_id) 
+            {
+                $temp_result = Review::where('user_id', '=', $following_id)->get();
+                $reviews = $reviews->merge($temp_result);//merge two collections together
+            }
+        }
+        else {
+            $reviews = NULL;
+        }
+        return view('users.show')->with('user', $user)->with('reviews', $reviews);
     }
 
-    public function following_list($current_user_id)
+    public function unfollow($id)
     {
-        $user = User::find($current_user_id);
-        $following_ids = $user->following;
-        
-        //$reviews= Review::where('user_id', '=', $id); 
-        return view('users.show')->with('user', $user);
+        $user = Auth::user();
+        $following_ids = explode(',', $user->following);
+        $user->following = implode(',', array_diff($following_ids, explode(',', $id)));
+        $user->save();
+        $user = User::find(Auth::user()->id);
+        $reviews = Review::where('user_id', '=', Auth::user()->id)->get();
+        return redirect("user/Auth::user()->id");
     }
     
     /**

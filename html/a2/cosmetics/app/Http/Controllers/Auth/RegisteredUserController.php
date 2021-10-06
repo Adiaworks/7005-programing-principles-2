@@ -42,6 +42,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'type' => ['required', 'string', 'max:255', 'in:Moderator, Member'],
+            'following' => ['nullable', 'string', 'max:255'],
         ]);
 
         $user = User::create([
