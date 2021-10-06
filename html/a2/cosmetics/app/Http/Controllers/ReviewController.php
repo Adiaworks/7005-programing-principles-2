@@ -45,7 +45,6 @@ class ReviewController extends Controller
         } 
         elseif ($review->like != NULL && !in_array($current_user_id, $user_ids_like) && !in_array($current_user_id, $user_ids_dislike))
         {  
-            //$user_ids_like = array_push($user_ids_like, '$current_user_id');
             $review->like = $review->like . "," . strval($current_user_id);
         }
         
@@ -178,9 +177,7 @@ class ReviewController extends Controller
             $review->dislike = $request->dislike;
             $review->save();
             $item_id = $review->item_id;
-            $reviews = Review::where('item_id', '=', $item_id)->paginate(5);
-            $item = Item::find($item_id);
-            return view('items.show')->with('reviews', $reviews)->with('item',$item);
+            return redirect("item/$item_id");
     }
 
     /**
@@ -196,11 +193,6 @@ class ReviewController extends Controller
         $review->delete();
         
         $item_id = $review->item_id;
-        $reviews = Review::where('item_id', '=', $item_id)->paginate(5);
-
-        $user_ids = Review::where('item_id', '=', $id)->get() ; 
-        $item = Item::find($item_id);
-        
-        return view('items.show')->with('item', $item)->with('reviews', $reviews)->with('user_ids', $user_ids);
+        return redirect("item/$item_id");
     }
 }

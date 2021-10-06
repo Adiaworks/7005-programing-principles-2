@@ -142,8 +142,7 @@ class ItemController extends Controller
             }
          }
         $item->save();
-        $reviews = Review::where('item_id', '=', $id)->paginate(5);
-        return view('items.show')->with('item', $item)->with('reviews', $reviews);
+        return redirect("item/$item->id");
     }
 
     public function upload_images($id)
@@ -195,7 +194,6 @@ class ItemController extends Controller
         $reviews = Review::where('item_id', '=', $id);
         $reviews->delete();
         $item->delete();
-        $items = Item::all();
-        return view('items.index')->with('items', $items);
+        return redirect("item");
     }
 }
