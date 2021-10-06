@@ -6,7 +6,7 @@
     <p>{{$user->type}}</p>
     @if ($user->following != NULL)
         @foreach(explode(',', $user->following) as $user_id)
-        
+        {{$user_id}}
 
         @endforeach
 

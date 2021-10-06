@@ -25,7 +25,7 @@ Route::resource('item', ItemController::class);
 
 Route::get('/', [ItemController::class, 'index']);
 
-Route::resource('uer', ItemController::class);
+Route::resource('user', UserController::class);
 
 Route::resource('review', ReviewController::class);
 
@@ -42,6 +42,8 @@ Route::post('item/store_images/{item_id}', [ItemController::class, 'store_images
 Route::post('review/like/{review_id}', [ReviewController::class, 'like']);
 
 Route::post('review/dislike/{review_id}', [ReviewController::class, 'dislike']);
+
+Route::post('user/show/{user_id}', [UserController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
