@@ -47,7 +47,7 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255|unique:items, field',
+            'name' => 'required|max:255|unique:items',
             'price' => 'required|numeric|min:1',
             'manufacture_name' => 'required|max:255',
             'description' => 'required|max:255',

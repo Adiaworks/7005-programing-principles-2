@@ -8,6 +8,7 @@
 
     <h2>Hi {{Auth::user()->name}}!</h2>
     <p>User type: {{Auth::user()->type}}</p>
+    
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

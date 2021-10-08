@@ -69,6 +69,7 @@ class UserController extends Controller
             {
                 $temp_result = Review::where('user_id', '=', $following_id)->get();
                 $reviews = $reviews->merge($temp_result);//merge two collections together
+                
             }
         }
         else {
