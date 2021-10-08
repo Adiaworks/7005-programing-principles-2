@@ -64,21 +64,21 @@
                 <a href='{{url("documentation")}}' class="navbar-brand d-flex align-items-center">Documentation</a>
 
                 @auth
-                <!--- user is logged in --->
-                <div class="user-detail">
-                    <a href="{{url('user',Auth::user()->id)}}" class="navbar-brand d-flex align-items-center">{{Auth::user()->name}}</a>
-                    <strong>{{Auth::user()->type}}</strong>
-                </div>
-                <form method="POST" action="{{url('/logout')}}">
-                    {{csrf_field()}}
-                    <input type="submit" value="Logout">
-                </form>
+                    <!--- user is logged in --->
+                    <div class="user-detail">
+                        <a href="{{url('user',Auth::user()->id)}}" class="navbar-brand d-flex align-items-center">{{Auth::user()->name}}</a>
+                        <strong>{{Auth::user()->type}}</strong>
+                    </div>
+                    <form method="POST" action="{{url('/logout')}}">
+                        {{csrf_field()}}
+                        <input type="submit" value="Logout">
+                    </form>
                 @else
-                <!--- user is not logged in --->
-                <div>
-                    <a href="{{ route('login') }}"><button>Log in</button></a>
-                    <a href="{{ route('register') }}"><button>Register</button></a>
-                </div>
+                    <!--- user is not logged in --->
+                    <div>
+                        <a href="{{ route('login') }}"><button>Log in</button></a>
+                        <a href="{{ route('register') }}"><button>Register</button></a>
+                    </div>
                 @endauth
             </div>
 

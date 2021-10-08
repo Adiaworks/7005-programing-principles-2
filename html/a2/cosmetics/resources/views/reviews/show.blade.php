@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    Review
+@endsection
+
 @section('content')
 
     <h2>{{$review->name}}</h2>

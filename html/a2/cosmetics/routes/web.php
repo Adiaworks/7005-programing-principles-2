@@ -21,38 +21,34 @@ use App\Models\Review;
 |
 */ 
 
-Route::resource('item', ItemController::class);
+Route::resource('item', ItemController::class);//this route directs to all functions in the ItemController
 
-Route::get('/', [ItemController::class, 'index']);
+Route::get('/', [ItemController::class, 'index']);//this route directs to the index function in the ItemController
 
-Route::resource('user', UserController::class);
+Route::resource('user', UserController::class);//this route directs to all functions in the UserController
 
-Route::resource('review', ReviewController::class);
+Route::resource('review', ReviewController::class);//this route directs to all functions in the ReviewController
 
-Route::get('review/create_a_review/{item_id}', [ReviewController::class, 'create_a_review']);
+Route::get('review/create_a_review/{item_id}', [ReviewController::class, 'create_a_review']);//this route directs to create_a_review functions in the ReviewController
+
+Route::get('item/upload_images/{item_id}', [ItemController::class, 'upload_images']);//this route directs to upload_images function in the ItemController
+
+Route::post('item/store_images/{item_id}', [ItemController::class, 'store_images']);//this route directs to store_images function in the ItemController
+
+Route::post('review/like/{review_id}', [ReviewController::class, 'like']);//this route directs to like function in the ReviewController
+
+Route::post('review/dislike/{review_id}', [ReviewController::class, 'dislike']);//this route directs to dislike function in the ReviewController
+
+Route::post('user/unfollow/{user_id}', [UserController::class, 'unfollow']);//this route directs to unfollow function in the UserController
+
+Route::post('user/follow/{user_id}', [UserController::class, 'follow']);//this route directs to follow function in the UserController
 
 Route::get('documentation', function () {
     return view('documentation.content');
-});
-
-Route::get('item/upload_images/{item_id}', [ItemController::class, 'upload_images']);
-
-Route::post('item/store_images/{item_id}', [ItemController::class, 'store_images']);
-
-Route::post('review/like/{review_id}', [ReviewController::class, 'like']);
-
-Route::post('review/dislike/{review_id}', [ReviewController::class, 'dislike']);
-
-Route::post('user/unfollow/{user_id}', [UserController::class, 'unfollow']);
-
-Route::post('user/follow/{user_id}', [UserController::class, 'follow']);
-
-//Route::post('user/follow/{user_id}', [UserController::class, 'follow']);
-
-//Route::post('user/show/{user_id}', [UserController::class, 'show']);
+});//this route directs to the documentation display page
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');//this route goes to the welcome dashboard of laravel
 
 require __DIR__.'/auth.php';
