@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+    function __construct() 
+    {
+        $this->middleware('auth', ["except"=>['index']]);
+    }//this function authenticate all the fucntion except for the index and show which require no login
+
     /**
      * Display a listing of the resource.
      *
@@ -71,15 +77,29 @@ class UserController extends Controller
         return view('users.show')->with('user', $user)->with('reviews', $reviews);
     }
 
+    public function follow($id)
+    {
+        $user = Auth::user();//get current logged in user data
+        
+        if ($user->following === NULL) {
+            $user->following = $id;
+        }
+        elseif ($user->following != NULL){
+            $user->following = $user->following . "," . strval($id);
+        }
+        $user->save();
+        $current_user_id = $user->id;
+        return redirect("user/$current_user_id");
+    }
+
     public function unfollow($id)
     {
         $user = Auth::user();
         $following_ids = explode(',', $user->following);
-        $user->following = implode(',', array_diff($following_ids, explode(',', $id)));
+        $user->following = implode(',', array_diff($following_ids, explode(',', $id)));//exclude the user id unfollowed
         $user->save();
-        $user = User::find(Auth::user()->id);
-        $reviews = Review::where('user_id', '=', Auth::user()->id)->get();
-        return redirect("user/Auth::user()->id");
+        $current_user_id = $user->id;
+        return redirect("user/$current_user_id");
     }
     
     /**

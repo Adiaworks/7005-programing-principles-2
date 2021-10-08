@@ -47,6 +47,10 @@ Route::post('user/unfollow/{user_id}', [UserController::class, 'unfollow']);
 
 Route::post('user/follow/{user_id}', [UserController::class, 'follow']);
 
+//Route::post('user/follow/{user_id}', [UserController::class, 'follow']);
+
+//Route::post('user/show/{user_id}', [UserController::class, 'show']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

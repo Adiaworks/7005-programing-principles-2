@@ -17,17 +17,28 @@
                     <p class="card-text">User: {{$review->user->name}}</p>
                     <p class="card-text">{{$review->review_created_at}}</p> 
                 </div>
-                @if (str_contains(Auth::user()->following, $review->user_id))
-                    <form method="POST" style="text-align:center;" action= '{{url("user/unfollow/", Auth::user()->id)}}'>
-                        {{csrf_field()}}
-                        <input type="submit" value="Unfollow this user">
-                    </form>
-                @else
-                    <form method="POST" style="text-align:center;" action= '{{url("user/follow/", Auth::user()->id)}}'>
-                        {{csrf_field()}}
-                        <input type="submit" value="Follow this user">
-                    </form>
-                @endif
+                @auth
+                    @if ((Auth::user()->following) === '') 
+                        @if(($review->user_id) != (Auth::user()->id))
+                        <form method="POST" style="text-align:center;" action= '{{url("user/follow/$review->user_id")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Follow this user">
+                        </form>
+                        @endif
+                    @else
+                        @if (str_contains(Auth::user()->following, $review->user_id))
+                        <form method="POST" style="text-align:center;" action= '{{url("user/unfollow/$review->user_id")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Unfollow this user">
+                        </form>
+                        @elseif (($review->user_id) != (Auth::user()->id))
+                        <form method="POST" style="text-align:center;" action= '{{url("user/follow/$review->user_id")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Follow this user">
+                        </form>
+                        @endif
+                    @endif
+                @endauth
             </div>
         </div>
     @endforeach
