@@ -35,47 +35,26 @@
     </p>
     @foreach($reviews as $review)
     <!--- loop through all the reviews and display their content --->
-        @if (count(explode(',', $review->dislike)) <= count(explode(',', $review->like)))
-        <!--- compare the dislike numbers with like numbers and display in different background colors --->
-        <div class="card" style="background-color:peachpuff">
+    @auth
+    <!--- user is logged in --->
+    @if ($review->dislike === NULL && $review->like === NULL)
+        <div class="card" style="background-color:white" id="inner">
             <div class="container">
                 <p>Rating: {{$review->rating}}</p>
                 <p>Review: {{$review->content}}</p>
                 <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
-                @auth 
-                <!--- user is logged in --->
                 <div class="line-up">
-                    
-                    @if ($review->like === NULL)
-                    <!--- check the like number is none or not ---> 
-                        <form method="POST" action= '{{url("review/like/$review->id")}}'>
-                            {{csrf_field()}}
-                            <input type="submit" value="Like({{(count(explode(',', $review->like))-1)}})">
-                        </form>
-                    @else
-                        <form method="POST" action= '{{url("review/like/$review->id")}}'>
-                            {{csrf_field()}}
-                            <input type="submit" value="Like({{count(explode(',', $review->like))}})">
-                            {{$review->like}}
-                        </form>
-                    @endif
-
-                    @if ($review->dislike === NULL)
-                    <!--- check the dislike number is none or not ---> 
-                        <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
-                            {{csrf_field()}} 
-                            <input type="submit" value="Dislike({{(count(explode(',', $review->dislike))-1)}})">
-                        </form>
-                    @else
-                        <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
-                            {{csrf_field()}} 
-                            <input type="submit" value="Dislike({{count(explode(',', $review->dislike))}})">
-                            {{$review->dislike}}
-                        </form>
-                    @endif
-
+                <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                    {{csrf_field()}}
+                    <input type="submit" value="Like({{(count(explode(',', $review->like))-1)}})">
+                    {{$review->like}}
+                </form>
+                <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                    {{csrf_field()}} 
+                    <input type="submit" value="Dislike({{(count(explode(',', $review->dislike))-1)}})">
+                    {{$review->dislike}}
+                </form>
                     @if (Auth::user()->type === "Moderator")                        
-                        
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}}
                             <input type="submit" value="Edit">
@@ -86,9 +65,9 @@
                             {{ method_field('DELETE') }}
                             <input type="submit" value="Delete">
                         </form>
-                    
+                
                     @elseif ($review->user->id === Auth::user()->id)
-                        
+                    
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Edit">
@@ -99,49 +78,29 @@
                             {{ method_field('DELETE') }}
                             <input type="submit" value="Delete">
                         </form>
-                    
                     @endif
                 </div>
-                @endauth
             </div>
-        </div><br>
-        @else
-        <div class="card" style="background-color:oldlace ">
+        </div>
+    @elseif ($review->dislike === NULL && $review->like != NULL && ((count(explode(',', $review->dislike))-1) < count(explode(',', $review->like))))
+        <div class="card" style="background-color:peachpuff" id="inner">
             <div class="container">
                 <p>Rating: {{$review->rating}}</p>
                 <p>Review: {{$review->content}}</p>
                 <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
-                @auth 
                 <div class="line-up">
-                    
-                    @if ($review->like === NULL) 
-                        <form method="POST" action= '{{url("review/like/$review->id")}}'>
-                            {{csrf_field()}}
-                            <input type="submit" value="Like({{(count(explode(',', $review->like))-1)}})">
-                        </form>
-                    @else
-                        <form method="POST" action= '{{url("review/like/$review->id")}}'>
-                            {{csrf_field()}}
-                            <input type="submit" value="Like({{count(explode(',', $review->like))}})">
-                            {{$review->like}}
-                        </form>
-                    @endif
-
-                    @if ($review->dislike === NULL)
-                        <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
-                            {{csrf_field()}} 
-                            <input type="submit" value="Dislike({{(count(explode(',', $review->dislike))-1)}})">
-                        </form>
-                    @else
-                        <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
-                            {{csrf_field()}} 
-                            <input type="submit" value="Dislike({{count(explode(',', $review->dislike))}})">
-                            {{$review->dislike}}
-                        </form>
-                    @endif
-
+                    <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                    {{csrf_field()}}
+                    <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
+                    {{$review->like}}
+                </form>
+                <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                    {{csrf_field()}} 
+                    <input type="submit" value="Dislike({{(count(explode(',', $review->dislike))-1)}})">
+                    {{$review->dislike}}
+                </form>
+                
                     @if (Auth::user()->type === "Moderator")                        
-                        
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}}
                             <input type="submit" value="Edit">
@@ -152,9 +111,9 @@
                             {{ method_field('DELETE') }}
                             <input type="submit" value="Delete">
                         </form>
-                    
+                
                     @elseif ($review->user->id === Auth::user()->id)
-                        
+                    
                         <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Edit">
@@ -165,16 +124,198 @@
                             {{ method_field('DELETE') }}
                             <input type="submit" value="Delete">
                         </form>
-                    
                     @endif
                 </div>
-                @endauth
             </div>
-        </div><br>
-        @endif
+        </div>
+    @elseif ($review->dislike != NULL && $review->like != NULL && ((count(explode(',', $review->dislike))) < count(explode(',', $review->like))))
+        <div class="card" style="background-color:peachpuff" id="inner">
+            <div class="container">
+                <p>Rating: {{$review->rating}}</p>
+                <p>Review: {{$review->content}}</p>
+                <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
+                <div class="line-up">
+                    <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                        {{csrf_field()}}
+                        <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
+                        {{$review->like}}
+                    </form>
+                    <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                        {{csrf_field()}} 
+                        <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
+                        {{$review->like}}
+                    </form>
+                    @if (Auth::user()->type === "Moderator")                        
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Edit">
+                        </form>
+
+                        <form method="POST" action= '{{url("review/$review->id")}}'>
+                            {{csrf_field()}} 
+                            {{ method_field('DELETE') }}
+                            <input type="submit" value="Delete">
+                        </form>
+                
+                    @elseif ($review->user->id === Auth::user()->id)
+                    
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                            {{csrf_field()}} 
+                            <input type="submit" value="Edit">
+                        </form>
+
+                        <form method="POST" action= '{{url("review/$review->id")}}'>
+                            {{csrf_field()}} 
+                            {{ method_field('DELETE') }}
+                            <input type="submit" value="Delete">
+                        </form>
+                    @endif
+                </div>
+            </div> 
+        </div> 
+    @elseif ($review->dislike != NULL && $review->like != NULL && ((count(explode(',', $review->dislike))) > count(explode(',', $review->like))))
+        <div class="card" style="background-color:oldlace" id="inner">
+            <div class="container">
+                <p>Rating: {{$review->rating}}</p>
+                <p>Review: {{$review->content}}</p>
+                <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
+                <div class="line-up">
+                <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                    {{csrf_field()}}
+                    <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
+                    {{$review->like}}
+                </form>
+                <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                    {{csrf_field()}} 
+                    <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
+                    {{$review->dislike}}
+                </form>
+                
+                    @if (Auth::user()->type === "Moderator")                        
+                    
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Edit">
+                        </form>
+
+                        <form method="POST" action= '{{url("review/$review->id")}}'>
+                            {{csrf_field()}} 
+                            {{ method_field('DELETE') }}
+                            <input type="submit" value="Delete">
+                        </form>
+                
+                    @elseif ($review->user->id === Auth::user()->id)
+                    
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                            {{csrf_field()}} 
+                            <input type="submit" value="Edit">
+                        </form>
+
+                        <form method="POST" action= '{{url("review/$review->id")}}'>
+                            {{csrf_field()}} 
+                            {{ method_field('DELETE') }}
+                            <input type="submit" value="Delete">
+                        </form>
+                    @endif
+                </div>
+            </div> 
+        </div>
+    @elseif ($review->dislike != NULL && $review->like != NULL && ((count(explode(',', $review->dislike))) == count(explode(',', $review->like))))
+        <div class="card" style="background-color:white" id="inner">
+            <div class="container">
+                <p>Rating: {{$review->rating}}</p>
+                <p>Review: {{$review->content}}</p>
+                <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
+                <div class="line-up">
+                    <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                        {{csrf_field()}}
+                        <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
+                        {{$review->like}}
+                    </form>
+                    <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                        {{csrf_field()}} 
+                        <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
+                        {{$review->dislike}}
+                    </form>
+                    @if (Auth::user()->type === "Moderator")                        
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                            {{csrf_field()}}
+                            <input type="submit" value="Edit">
+                        </form>
+
+                        <form method="POST" action= '{{url("review/$review->id")}}'>
+                            {{csrf_field()}} 
+                            {{ method_field('DELETE') }}
+                            <input type="submit" value="Delete">
+                        </form>
+                
+                    @elseif ($review->user->id === Auth::user()->id)
+                    
+                        <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                            {{csrf_field()}} 
+                            <input type="submit" value="Edit">
+                        </form>
+
+                        <form method="POST" action= '{{url("review/$review->id")}}'>
+                            {{csrf_field()}} 
+                            {{ method_field('DELETE') }}
+                            <input type="submit" value="Delete">
+                        </form>
+                    @endif
+                </div>
+            </div> 
+        </div>
+    @elseif ($review->like === NULL && $review->dislike != NULL && ((count(explode(',', $review->dislike))) > count(explode(',', $review->like))-1))
+        <div class="card" style="background-color:oldlace" id="inner">
+            <div class="container">
+                <p>Rating: {{$review->rating}}</p>
+                <p>Review: {{$review->content}}</p>
+                <p>Created by: {{$review->user->name}} {{$review->created_at}}</p>
+                <div class="line-up">
+                    <form method="POST" action= '{{url("review/like/$review->id")}}'>
+                        {{csrf_field()}}
+                        <input type="submit" value="Like({{(count(explode(',', $review->like))-1)}})">
+                        {{$review->like}}
+                    </form>
+                    <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
+                        {{csrf_field()}} 
+                        <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
+                        {{$review->dislike}}
+                    </form>
+                        @if (Auth::user()->type === "Moderator")                        
+                            <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                                {{csrf_field()}}
+                                <input type="submit" value="Edit">
+                            </form>
+
+                            <form method="POST" action= '{{url("review/$review->id")}}'>
+                                {{csrf_field()}} 
+                                {{ method_field('DELETE') }}
+                                <input type="submit" value="Delete">
+                            </form>
+                    
+                        @elseif ($review->user->id === Auth::user()->id)
+                        
+                            <form method="GET" action= '{{url("review/$review->id/edit")}}'>
+                                {{csrf_field()}} 
+                                <input type="submit" value="Edit">
+                            </form>
+
+                            <form method="POST" action= '{{url("review/$review->id")}}'>
+                                {{csrf_field()}} 
+                                {{ method_field('DELETE') }}
+                                <input type="submit" value="Delete">
+                            </form>
+                        @endif
+                </div>
+                
+            </div>
+        </div>
+    @endif 
+    @endauth
     @endforeach
 
-    <div id="outer">  
+    <br><div id="outer">  
         <div id="inner">{{ $reviews->links()}}</div>
     </div>
 
