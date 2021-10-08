@@ -53,8 +53,8 @@ class ItemController extends Controller
             'description' => 'required|max:255',
             'URL' => 'nullable|url',
             'user_id' => 'required|integer',
-            'image' => 'nullable',
-            'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
+            'images' => 'required',
+            'images.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
             ]);
 
             //$image_store = request()->file('image')->store('item_images', 'public');
@@ -121,8 +121,8 @@ class ItemController extends Controller
             'description' => 'required|max:255',
             'URL' => 'nullable|url',
             'user_id' => 'required',
-            'image' => 'nullable',
-            'image.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:1280'
+            'images' => 'nullable',
+            'images.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:1280'
         ]);
 
         $item = Item::find($id);
@@ -156,24 +156,24 @@ class ItemController extends Controller
     public function store_images(Request $request, $id)
     {
         $this->validate($request, [
-            'images' => 'nullable',//how to limit the file type of the mutiple files uploaded
+            'images' => 'nullable',
             'images.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
         ]);
 
         $item = Item::find($id);
-        $images = [];
         if($request->hasfile('images'))
         {
              foreach($request->file('images') as $image)
             {
                 $image_store = $image->store('item_images', 'public');//store the image object to the item_images folder in the public directory
-                $images[] = $image_store;  //add every image into the images array
-                $new_image = implode(",", $images);
-                $current_images = $item->image;
+                $new_image = $image_store;//get the image in the current round/loop
+                $current_images = $item->image;//retrieve all the images of the item
                 if ($current_images === "") {
+                    //check if there's no image of the item
                     $item->image = $new_image;
-                } else {
-                    $item->image = $current_images . "," . $new_image;
+                } 
+                else {
+                    $item->image = $current_images . "," . $new_image;//add the image in this round to the image collumn of the item
                 }
             }
         }
