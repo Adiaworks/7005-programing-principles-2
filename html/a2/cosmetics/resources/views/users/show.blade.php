@@ -9,7 +9,7 @@
     <h2>Hi {{Auth::user()->name}}!</h2>
     <p>User type: {{Auth::user()->type}}</p>
     <p>
-        <a href='{{url("user/recommendation")}}'>Recommendation</a>
+        <a href='{{url("user/recommendation", Auth::user()->id)}}'>Recommendation</a>
     </p>
     <div class="album py-5 bg-light">
         <div class="container">

@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    function __construct() 
+    function __construct()
     {
-        $this->middleware('auth', ["except"=>['index']]);
-    }//this function authenticate all the fucntion except for the index and show which require no login
+        $this->middleware('auth', ["except" => ['index']]);
+    } //this function authenticate all the fucntion except for the index and show which require no login
 
     /**
      * Display a listing of the resource.
@@ -60,19 +60,17 @@ class UserController extends Controller
     public function show($id)
     {
         //show the specific user's following details
-        
+
         $user = User::where('id', '=', $id)->first();
-        if (($user->following) != NULL){
+        if (($user->following) != NULL) {
             $following_ids = explode(',', $user->following);
-            $reviews = new Collection();//set up a blank Collection
-            foreach ($following_ids as $following_id) 
-            {
+            $reviews = new Collection(); //set up a blank Collection
+            foreach ($following_ids as $following_id) {
                 $temp_result = Review::where('user_id', '=', $following_id)->get();
-                $reviews = $reviews->merge($temp_result);//merge two collections together
-                
+                $reviews = $reviews->merge($temp_result); //merge two collections together
+
             }
-        }
-        else {
+        } else {
             $reviews = NULL;
         }
         return view('users.show')->with('user', $user)->with('reviews', $reviews);
@@ -81,12 +79,11 @@ class UserController extends Controller
     public function follow($id)
     {
         //allow the current logged in user to follow others
-        $user = Auth::user();//get current logged in user data
-        
+        $user = Auth::user(); //get current logged in user data
+
         if ($user->following === NULL) {
             $user->following = $id;
-        }
-        elseif ($user->following != NULL){
+        } elseif ($user->following != NULL) {
             $user->following = $user->following . "," . strval($id);
         }
         $user->save();
@@ -99,17 +96,46 @@ class UserController extends Controller
         //allow the logged in user to unfollow users in the following column
         $user = Auth::user();
         $following_ids = explode(',', $user->following);
-        $user->following = implode(',', array_diff($following_ids, explode(',', $id)));//exclude the user id unfollowed
+        $user->following = implode(',', array_diff($following_ids, explode(',', $id))); //exclude the user id unfollowed
+        if ($user->following === "") {
+            $user->following = NULL;
+        }
         $user->save();
         $current_user_id = $user->id;
         return redirect("user/$current_user_id");
     }
-    
+
     public function recommendation($id)
     {
-        //the logged in user can check personalised recommendation 
+        //the logged in user can check personalised recommendation
+        $user = Auth::user();
+        $items_recomm = [];
+        if ($user->following != NULL) {
+            $following_ids = explode(',', $user->following);
 
-        return view('users.recommendation')->with('', )->with('', );
+            $reviews = new Collection();
+            foreach ($following_ids as $following_id) {
+                $temp_result = Review::where('user_id', '=', $following_id)->get();
+                $reviews = $reviews->merge($temp_result); //merge two collections together
+            }
+
+            $item_id_summary = [];
+            foreach ($reviews as $review) {
+                $item_id_summary[] = $review->item_id;
+            }
+            $item_id_summary = array_count_values($item_id_summary);
+            arsort($item_id_summary, SORT_NUMERIC);
+            // $items_recomm = array_slice($item_id_summary, 0, 3);
+            for ($i = 0; $i <= min(3, count($item_id_summary)); $i++) {
+                $items_recomm[] = array_keys($item_id_summary)[$i];
+            }
+        }
+        if ($items_recomm != []) {
+            foreach ($items_recomm as $item) {
+                dd($item);
+            }
+        }
+        return view('users.recommendation');
     }
 
     /**

@@ -43,7 +43,7 @@ Route::post('user/unfollow/{user_id}', [UserController::class, 'unfollow']);//th
 
 Route::post('user/follow/{user_id}', [UserController::class, 'follow']);//this route directs to follow function in the UserController
 
-Route::resource('user/recommendation', [UserController::class, 'recommendation']);//this route directs to the recommendation function
+Route::get('user/recommendation/{user_id}', [UserController::class, 'recommendation']);//this route directs to the recommendation function
 
 Route::get('documentation', function () {
     return view('documentation.content');
