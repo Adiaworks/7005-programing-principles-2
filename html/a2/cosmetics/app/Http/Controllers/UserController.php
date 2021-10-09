@@ -126,16 +126,45 @@ class UserController extends Controller
             $item_id_summary = array_count_values($item_id_summary);
             arsort($item_id_summary, SORT_NUMERIC);
             // $items_recomm = array_slice($item_id_summary, 0, 3);
-            for ($i = 0; $i <= min(3, count($item_id_summary)); $i++) {
+            for ($i = 0; $i < min(3, count($item_id_summary)); $i++) {
                 $items_recomm[] = array_keys($item_id_summary)[$i];
             }
         }
+        $items = new Collection();
         if ($items_recomm != []) {
-            foreach ($items_recomm as $item) {
-                dd($item);
+            foreach ($items_recomm as $item_id) {
+                $temp_result = Item::where('id', '=', $item_id)->get();
+                $items = $items->merge($temp_result); //merge two collections together
             }
         }
-        return view('users.recommendation');
+        $users_recomm = [];
+        foreach ($items as $item) {
+            $temp_result = Review::where('item_id', '=', $item_id)->get();
+            $max_like = -1;
+            $user_recomm = "";
+            foreach ($temp_result as $review) {
+                $user_ids_like = explode(',', $review->like);//convert the string of user ids who like the review to array
+                if (count($user_ids_like) > $max_like) {
+                    if (!str_contains($user->following, $review->user_id)) {
+                        if (!in_array($review->user_id, $users_recomm)) {
+                            $user_recomm = $review->user_id;
+                        }
+                    }
+                    
+                }
+            }
+            if ($user_recomm != "") {
+                $users_recomm[] = $user_recomm;
+            }
+        }
+        $users = new Collection();
+        if ($users_recomm != []) {
+            foreach ($users_recomm as $user_id) {
+                $temp_result = User::where('id', '=', $user_id)->get();
+                $users = $users->merge($temp_result); //merge two collections together
+            }
+        }
+        return view('users.recommendation')->with('items', $items)->with('users', $users);
     }
 
     /**
