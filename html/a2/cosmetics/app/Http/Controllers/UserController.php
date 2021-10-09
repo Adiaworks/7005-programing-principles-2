@@ -59,7 +59,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //$user = User::find($id);
+        //show the specific user's following details
         
         $user = User::where('id', '=', $id)->first();
         if (($user->following) != NULL){
@@ -80,6 +80,7 @@ class UserController extends Controller
 
     public function follow($id)
     {
+        //allow the current logged in user to follow others
         $user = Auth::user();//get current logged in user data
         
         if ($user->following === NULL) {
@@ -95,6 +96,7 @@ class UserController extends Controller
 
     public function unfollow($id)
     {
+        //allow the logged in user to unfollow users in the following column
         $user = Auth::user();
         $following_ids = explode(',', $user->following);
         $user->following = implode(',', array_diff($following_ids, explode(',', $id)));//exclude the user id unfollowed
@@ -103,6 +105,13 @@ class UserController extends Controller
         return redirect("user/$current_user_id");
     }
     
+    public function recommendation($id)
+    {
+        //the logged in user can check personalised recommendation 
+
+        return view('users.recommendation')->with('', )->with('', );
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
