@@ -23,6 +23,7 @@ class ItemController extends Controller
      */
     public function index()
     {
+        //display all pictures and names of all items
         $items = Item::all();
         $reviews = Review::all();
         return view('items.index')->with('items', $items)->with('reviews', $reviews);
@@ -35,6 +36,7 @@ class ItemController extends Controller
      */
     public function create()
     {
+        //display the create form of a new item
         return view('items.create_form');
     }
 
@@ -46,6 +48,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        //store the new item's details
         $this->validate($request, [
             'name' => 'required|max:255|unique:items',
             'price' => 'required|numeric|min:1',
@@ -87,6 +90,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
+        //display all the information and reviews of this item
         $item = Item::find($id);
         $reviews = Review::where('item_id', '=', $id)->paginate(5);  
         return view('items.show')->with('item', $item)->with('reviews', $reviews);
@@ -100,6 +104,7 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
+        //display the item's edit form
         $item = Item::find($id);
         return view('items.edit_form')->with('item', $item)->with('reviews', Review::all());
     }
@@ -113,7 +118,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //update and save the item's details
         $this->validate($request, [
             'name' => 'required|max:255|unique:items, field',
             'price' => 'required|numeric|min:1',
@@ -148,13 +153,14 @@ class ItemController extends Controller
 
     public function upload_images($id)
     {
+        //display the upload images page
         $item = Item::find($id);
-        // $user_name = $request->user_name;->with('user_name', $user_name)
         return view("items.upload_images")->with('item', $item);
     }
 
     public function store_images(Request $request, $id)
     {
+        //store the uploaded images into the item database
         $this->validate($request, [
             'images' => 'nullable',
             'images.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
