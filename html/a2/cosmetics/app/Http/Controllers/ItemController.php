@@ -60,7 +60,7 @@ class ItemController extends Controller
             'images.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf'
             ]);
 
-            //$image_store = request()->file('image')->store('item_images', 'public');
+            
             $item = new Item();
             $item->name = $request->name;
             $item->price = $request->price;
