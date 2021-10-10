@@ -66,7 +66,7 @@
                                 <input type="submit" value="Delete">
                             </form>
                     
-                        @else ($review->user->id === Auth::user()->id)
+                        @elseif ($review->user->id === Auth::user()->id)
                         
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                                 {{csrf_field()}} 
@@ -116,7 +116,7 @@
                                 <input type="submit" value="Delete">
                             </form>
                     
-                        @else ($review->user->id === Auth::user()->id)
+                        @elseif ($review->user->id === Auth::user()->id)
                         
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                                 {{csrf_field()}} 
@@ -164,7 +164,7 @@
                                 <input type="submit" value="Delete">
                             </form>
                     
-                        @else ($review->user->id === Auth::user()->id)
+                        @elseif ($review->user->id === Auth::user()->id)
                         
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                                 {{csrf_field()}} 
@@ -214,7 +214,7 @@
                                 <input type="submit" value="Delete">
                             </form>
                     
-                        @else ($review->user->id === Auth::user()->id)
+                        @elseif ($review->user->id === Auth::user()->id)
                         
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                                 {{csrf_field()}} 
@@ -263,7 +263,7 @@
                                 <input type="submit" value="Delete">
                             </form>
                     
-                        @else ($review->user->id === Auth::user()->id)
+                        @elseif ($review->user->id === Auth::user()->id)
                         
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                                 {{csrf_field()}} 
@@ -311,7 +311,7 @@
                                     <input type="submit" value="Delete">
                                 </form>
                         
-                            @else ($review->user->id === Auth::user()->id)
+                            @elseif ($review->user->id === Auth::user()->id)
                             
                                 <form method="GET" action= '{{url("review/$review->id/edit")}}'>
                                     {{csrf_field()}} 
