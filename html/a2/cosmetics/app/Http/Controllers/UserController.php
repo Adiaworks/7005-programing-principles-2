@@ -25,6 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        //show all the users
         $users = User::all();
         $reviews = Review::all();
         return view('users.index')->with('users', $users)->with('reviews', $reviews);
@@ -37,6 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        //create a new user
         return view('users.create_form')->with('users', User::all());
     }
 
@@ -83,7 +85,11 @@ class UserController extends Controller
 
         if ($user->following === NULL) {
             $user->following = $id;
-        } elseif ($user->following != NULL) {
+        } 
+        elseif ($user->following === "") {
+            $user->following = $id;
+        }
+        elseif ($user->following != NULL || $user->following != "" ) {
             $user->following = $user->following . "," . strval($id);
         }
         $user->save();
@@ -98,6 +104,7 @@ class UserController extends Controller
         $following_ids = explode(',', $user->following);
         $user->following = implode(',', array_diff($following_ids, explode(',', $id))); //exclude the user id unfollowed
         if ($user->following === "") {
+            //check if the logged in user didnt follow anyone
             $user->following = NULL;
         }
         $user->save();
@@ -107,7 +114,7 @@ class UserController extends Controller
 
     public function recommendation($id)
     {
-        //the logged in user can check personalised recommendation
+        //the logged in user can check personalised recommendation based on his/her followings
         $user = Auth::user();
         $items_recomm = [];
         if ($user->following != NULL) {
@@ -125,9 +132,10 @@ class UserController extends Controller
             }
             $item_id_summary = array_count_values($item_id_summary);
             arsort($item_id_summary, SORT_NUMERIC);
-            // $items_recomm = array_slice($item_id_summary, 0, 3);
+            // group item_id by its number in descending order
             for ($i = 0; $i < min(3, count($item_id_summary)); $i++) {
                 $items_recomm[] = array_keys($item_id_summary)[$i];
+                //get top three items with the larggest number of occurrences.
             }
         }
         $items = new Collection();
@@ -139,18 +147,25 @@ class UserController extends Controller
         }
         $users_recomm = [];
         foreach ($items as $item) {
+            //only three items will be recommended, therefore only three review's users with most likes will be recommended
             $temp_result = Review::where('item_id', '=', $item_id)->get();
             $max_like = -1;
             $user_recomm = "";
             foreach ($temp_result as $review) {
                 $user_ids_like = explode(',', $review->like);//convert the string of user ids who like the review to array
                 if (count($user_ids_like) > $max_like) {
-                    if (!str_contains($user->following, $review->user_id)) {
-                        if (!in_array($review->user_id, $users_recomm)) {
-                            $user_recomm = $review->user_id;
+                    //check if the like number of this review is bigger than last one
+                    if ($user->id != $review->user_id) {
+                        //check if the logged user is not equal to the review's user
+                        if (!str_contains($user->following, $review->user_id)) {
+                            //check if the logged user has followed the review's user or not
+                            if (!in_array($review->user_id, $users_recomm)) {
+                                //check whether the review's user has been added to the recommendation of users or not
+                                $max_like = count($user_ids_like);
+                                $user_recomm = $review->user_id;
+                            }
                         }
                     }
-                    
                 }
             }
             if ($user_recomm != "") {

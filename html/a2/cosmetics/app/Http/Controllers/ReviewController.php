@@ -23,6 +23,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
+        //display all reviews
         $items = Item::all();
         $reviews = Review::paginate(6);
         return view('reviews.index')->with('reviews', $reviews)->with('items', $items);
@@ -30,6 +31,7 @@ class ReviewController extends Controller
 
     public function like($id)
     {
+        //user can like a review
         $review = Review::find($id);//find out the review based on its id
         $user_ids_like = explode(',', $review->like);//convert the string of user ids who like the review to array
         $user_ids_dislike = explode(',', $review->dislike);//convert the string of user ids who dislike the review to array
@@ -37,14 +39,17 @@ class ReviewController extends Controller
         
         if ($review->like === NULL) 
         {
+            //check if the review did not liked by anyone
             if (!in_array($current_user_id, $user_ids_dislike))
             {
+                //check if the logged in user has disliked the review before
                $review->like = strval($current_user_id);
             }
 
         } 
         elseif ($review->like != NULL && !in_array($current_user_id, $user_ids_like) && !in_array($current_user_id, $user_ids_dislike))
         {  
+            //if the review has likes before, check if the logged user like or dislike the review before
             $review->like = $review->like . "," . strval($current_user_id);
         }
         
@@ -88,11 +93,13 @@ class ReviewController extends Controller
      */
     public function create_a_review($item_id)
     {
+        //create a new review
         return view('reviews.create_form')->with('users', User::all())->with('item_id', $item_id);
     }
 
     public function create()
     {
+        //did not use this function
         return view('reviews.create_form')->with('users', User::all());
     }
 
@@ -104,6 +111,7 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
+        //store the new review's information
         $this->validate($request, [
             'rating' => 'required|integer|max:5|min:1',
             'content' => 'required|min:6|max:255',
@@ -132,6 +140,7 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
+        //show the details of a review
         $review = Review::paginate(5);
         $users = Review::find($id)->users;
         return view('reviews.show')->with('review', $review)->with('users', $users);
@@ -145,6 +154,7 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
+        //edit a review
         $review = Review::find($id);
         $item_id = $review->item_id;
         return view('reviews.edit_form')->with('review', $review)->with('item_id', $item_id);
@@ -159,6 +169,7 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //update a review and save it
         $this->validate($request, [
             //validate the fields
             'rating' => 'required|integer|max:5|min:1',

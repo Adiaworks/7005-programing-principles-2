@@ -17,16 +17,18 @@ But I almost done all the requirements.
 <h4>3. Reflect on the process you have applied to develop your solution.</h4>
 <p>
 I started the assignment from the ERD. And I thought about the structure of my website.<br> 
-I spent a lot of time on working out the relationships between tables.<br>
-I tested each route and function repeatedly. I used dd() and var_dump() to test <br> 
-my code, which is helpful. When I had problems, I checked the weekly exercises <br>
-firstly and I found lecture videos are also helpful. If the lecture video did not solve my problems, <br>
-I would do research online. 
+I spent a lot of time on working out the relationships between tables. I tested each<br>
+ route and function repeatedly. I used dd() and var_dump() to test my code,  which is<br> 
+ helpful. When I had problems, I checked the weekly exercises firstly and I found <br>
+lecture videos are also helpful. If the lecture video did not solve my problems, I would<br>
+do research online. 
 </p>
 <h4>4. Recommendation feature </h4>
 <p>
-At first, I inspired by the Eloquent operations of database. So, I filtered the crucial related <br>
-information from the followings of a user, for example, items with the largest number of reviews 
-and users' likes the most often will be recommended to a user. <br>
+Based on the followings of the logged in user, I retrieved all users and their reviews and then got<br>
+all item ids of those reviews. Sorted all the item ids in their numbers of occurrences in the descending  <br>
+order. I got top three items to show up in the item recommendation section. <br>
+According to items recommended, only three items will be recommended, therefore only three review's <br>
+users with most likes will be recommended.
 </p>
 @endsection

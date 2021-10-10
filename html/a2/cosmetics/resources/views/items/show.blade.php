@@ -362,10 +362,12 @@
         </form>
     </div><br>    
 
+    @endauth
+
     <br><div id="outer">  
         <div id="inner">{{ $reviews->links()}}</div>
     </div>
-    @endauth
+    
 
 
 @endsection

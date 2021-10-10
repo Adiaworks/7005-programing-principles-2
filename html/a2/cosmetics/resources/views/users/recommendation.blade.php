@@ -52,7 +52,7 @@ Recommendation
                     </div>
                     <div class="card-body">
                         <p class="card-text">Email: {{$user->email}}</p>
-                        <p class="card-text">Following: {{$user->following}}</p>
+                        <p class="card-text">User type: {{$user->type}}</p>
                     </div>
                     @auth
                     @if ((Auth::user()->following) === '')
