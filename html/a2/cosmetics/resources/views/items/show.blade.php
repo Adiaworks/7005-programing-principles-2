@@ -47,12 +47,12 @@
                     <form method="POST" action= '{{url("review/like/$review->id")}}'>
                         {{csrf_field()}}
                         <input type="submit" value="Like({{(count(explode(',', $review->like))-1)}})">
-                        {{$review->like}}
+                        
                     </form>
                     <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
                         {{csrf_field()}} 
                         <input type="submit" value="Dislike({{(count(explode(',', $review->dislike))-1)}})">
-                        {{$review->dislike}}
+                        
                     </form>
                         @if (Auth::user()->type === "Moderator")                        
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
@@ -96,12 +96,12 @@
                         <form method="POST" action= '{{url("review/like/$review->id")}}'>
                             {{csrf_field()}}
                             <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
-                            {{$review->like}}
+                            
                         </form>
                         <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Dislike({{(count(explode(',', $review->dislike))-1)}})">
-                            {{$review->dislike}}
+                            
                         </form>
                     
                         @if (Auth::user()->type === "Moderator")                        
@@ -145,12 +145,12 @@
                         <form method="POST" action= '{{url("review/like/$review->id")}}'>
                             {{csrf_field()}}
                             <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
-                            {{$review->like}}
+                            
                         </form>
                         <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
-                            {{$review->like}}
+                            
                         </form>
                         @if (Auth::user()->type === "Moderator")                        
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
@@ -193,12 +193,12 @@
                     <form method="POST" action= '{{url("review/like/$review->id")}}'>
                         {{csrf_field()}}
                         <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
-                        {{$review->like}}
+                        
                     </form>
                     <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
                         {{csrf_field()}} 
                         <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
-                        {{$review->dislike}}
+                        
                     </form>
                     
                         @if (Auth::user()->type === "Moderator")                        
@@ -244,12 +244,12 @@
                         <form method="POST" action= '{{url("review/like/$review->id")}}'>
                             {{csrf_field()}}
                             <input type="submit" value="Like({{(count(explode(',', $review->like)))}})">
-                            {{$review->like}}
+                            
                         </form>
                         <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
                             {{csrf_field()}} 
                             <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
-                            {{$review->dislike}}
+                            
                         </form>
                         @if (Auth::user()->type === "Moderator")                        
                             <form method="GET" action= '{{url("review/$review->id/edit")}}'>
@@ -292,12 +292,12 @@
                             <form method="POST" action= '{{url("review/like/$review->id")}}'>
                                 {{csrf_field()}}
                                 <input type="submit" value="Like({{(count(explode(',', $review->like))-1)}})">
-                                {{$review->like}}
+                                
                             </form>
                             <form method="POST" action= '{{url("review/dislike/$review->id")}}'>
                                 {{csrf_field()}} 
                                 <input type="submit" value="Dislike({{(count(explode(',', $review->dislike)))}})">
-                                {{$review->dislike}}
+                                
                             </form>
                             @if (Auth::user()->type === "Moderator")                        
                                 <form method="GET" action= '{{url("review/$review->id/edit")}}'>
